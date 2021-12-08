@@ -3,7 +3,7 @@ import numpy as np
 
 from dlg.exceptions import DaliugeException
 from dlg_nifty_components import CudaMS2DirtyApp, CudaDirty2MSApp
-from dlg.droputils import save_numpy
+from dlg_nifty_components.droputils import save_numpy
 from dlg.drop import InMemoryDROP
 
 given = pytest.mark.parametrize
