@@ -55,7 +55,7 @@ jobs:
       - name: Build dist package
         run: | 
           python -m pip install --upgrade pip
-          pip install setuptools wheel
+          pip install setuptools wheel numpy
           python setup.py sdist bdist_wheel
       # Uncomment just for testing!
       # - name: Publish distribution 📦 to Test PyPI
