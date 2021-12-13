@@ -27,9 +27,9 @@ def test_CudaMS2DirtyApp():
     # Create the frequency axis.
     freq_start_hz = 299792458.0
     freq_inc_hz = 1.0
-    freq = np.linspace(freq_start_hz,
-                       freq_start_hz + (num_chan - 1) * freq_inc_hz,
-                       num_chan)
+    freq = np.linspace(
+        freq_start_hz, freq_start_hz + (num_chan - 1) * freq_inc_hz, num_chan
+    )
 
     # Allocate input arrays.
     vis = np.zeros((num_rows, num_chan), dtype=np.complex128)
@@ -38,11 +38,11 @@ def test_CudaMS2DirtyApp():
 
     # Generate synthetic data.
     for i in range(num_rows):
-        vis[i, 0] = 1 + 1j*(i + 1) / 10
+        vis[i, 0] = 1 + 1j * (i + 1) / 10
         uvw[i, 0] = (float(i) * image_size) / num_rows - image_size // 2
         uvw[i, 1] = (float(i) * image_size) / num_rows - image_size // 2
         uvw[i, 2] = 1.0
-    
+
     uvw_drop = InMemoryDROP("uvw", "uvw")
     save_numpy(uvw_drop, uvw)
     app.addInput(uvw_drop)
@@ -69,6 +69,7 @@ def test_CudaDirty2MSApp_exceptions():
     with pytest.raises(DaliugeException) as e:
         app.run()
 
+
 def test_CudaDirty2MSApp():
     app = CudaDirty2MSApp("a", "a")
 
@@ -80,9 +81,9 @@ def test_CudaDirty2MSApp():
     # Create the frequency axis.
     freq_start_hz = 299792458.0
     freq_inc_hz = 1.0
-    freq = np.linspace(freq_start_hz,
-                        freq_start_hz + (num_chan - 1) * freq_inc_hz,
-                        num_chan)
+    freq = np.linspace(
+        freq_start_hz, freq_start_hz + (num_chan - 1) * freq_inc_hz, num_chan
+    )
 
     # Allocate input arrays.
     image = np.zeros((num_rows, num_chan), dtype=np.float64)
@@ -111,5 +112,5 @@ def test_CudaDirty2MSApp():
     weight_spectrum_drop = InMemoryDROP("weight_spectrum", "weight_spectrum")
     save_numpy(weight_spectrum_drop, weight_spectrum)
     app.addInput(weight_spectrum_drop)
-    
+
     app.addOutput(InMemoryDROP("vis", "vis"))

@@ -1,11 +1,15 @@
-import io
-import numpy as np
 import wagg
 from dlg.exceptions import DaliugeException
 from dlg.drop import BarrierAppDROP
-from dlg.meta import (dlg_batch_input, dlg_batch_output, dlg_component,
-                      dlg_float_param, dlg_int_param, dlg_streaming_input,
-                      dlg_string_param, dlg_bool_param)
+from dlg.meta import (
+    dlg_batch_input,
+    dlg_batch_output,
+    dlg_component,
+    dlg_float_param,
+    dlg_int_param,
+    dlg_streaming_input,
+    dlg_bool_param,
+)
 from dlg_nifty_components.droputils import save_numpy, load_numpy
 
 
@@ -39,33 +43,47 @@ from dlg_nifty_components.droputils import save_numpy, load_numpy
 #     \~English dirty image port
 # @par EAGLE_END
 class CudaMS2DirtyApp(BarrierAppDROP):
-    component_meta = dlg_component('CudaMS2DirtyApp', 'Nifty Ms2Dirty App.',
-                                    [dlg_batch_input('binary/*', [])],
-                                    [dlg_batch_output('binary/*', [])],
-                                    [dlg_streaming_input('binary/*')])
-    npix_x = dlg_int_param('npix_x', 64)
-    npix_y = dlg_int_param('npix_y', 64)
-    do_wstacking = dlg_bool_param('do_wstacking', True)
-    pixsize_x = dlg_float_param('pixsize_x', None)
-    pixsize_y = dlg_float_param('pixsize_y', None)
+    component_meta = dlg_component(
+        "CudaMS2DirtyApp",
+        "Nifty Ms2Dirty App.",
+        [dlg_batch_input("binary/*", [])],
+        [dlg_batch_output("binary/*", [])],
+        [dlg_streaming_input("binary/*")],
+    )
+    npix_x = dlg_int_param("npix_x", 64)
+    npix_y = dlg_int_param("npix_y", 64)
+    do_wstacking = dlg_bool_param("do_wstacking", True)
+    pixsize_x = dlg_float_param("pixsize_x", None)
+    pixsize_y = dlg_float_param("pixsize_y", None)
 
     def run(self):
         if len(self.inputs) < 4:
-            raise DaliugeException(f"CudaMS2DirtyApp has {len(self.inputs)} input drops but requires at least 4")
+            raise DaliugeException(
+                f"CudaMS2DirtyApp has {len(self.inputs)} input drops but requires at least 4"
+            )
         uvw = load_numpy(self.inputs[0])
         freq = load_numpy(self.inputs[1])
         vis = load_numpy(self.inputs[2])
         weight_spectrum = load_numpy(self.inputs[3])
         epsilon = 1e-6  # unused
 
-        if self.pixsize_x == None:
+        if self.pixsize_x is None:
             self.pixsize_x = 1.0 / self.npix_x
-        if self.pixsize_y == None:
+        if self.pixsize_y is None:
             self.pixsize_y = 1.0 / self.npix_y
 
-        image = wagg.ms2dirty(uvw, freq, vis, weight_spectrum,
-            self.npix_x, self.npix_y, self.pixsize_x, self.pixsize_y,
-            epsilon, self.do_wstacking)
+        image = wagg.ms2dirty(
+            uvw,
+            freq,
+            vis,
+            weight_spectrum,
+            self.npix_x,
+            self.npix_y,
+            self.pixsize_x,
+            self.pixsize_y,
+            epsilon,
+            self.do_wstacking,
+        )
 
         save_numpy(self.outputs[0], image)
 
@@ -95,30 +113,43 @@ class CudaMS2DirtyApp(BarrierAppDROP):
 #     \~English vis port
 # @par EAGLE_END
 class CudaDirty2MSApp(BarrierAppDROP):
-    component_meta = dlg_component('CudaDirty2MSApp', 'Nifty Ms2Dirty App.',
-                                    [dlg_batch_input('binary/*', [])],
-                                    [dlg_batch_output('binary/*', [])],
-                                    [dlg_streaming_input('binary/*')])
-    pixsize_x = dlg_float_param('pixsize_x', None)
-    pixsize_y = dlg_float_param('pixsize_y', None)
-    do_wstacking = dlg_bool_param('do_wstacking', None)
+    component_meta = dlg_component(
+        "CudaDirty2MSApp",
+        "Nifty Ms2Dirty App.",
+        [dlg_batch_input("binary/*", [])],
+        [dlg_batch_output("binary/*", [])],
+        [dlg_streaming_input("binary/*")],
+    )
+    pixsize_x = dlg_float_param("pixsize_x", None)
+    pixsize_y = dlg_float_param("pixsize_y", None)
+    do_wstacking = dlg_bool_param("do_wstacking", None)
 
     def run(self):
         if len(self.inputs) < 4:
-            raise DaliugeException(f"CudaDirty2MSApp has {len(self.inputs)} input drops but requires at least 4")
+            raise DaliugeException(
+                f"CudaDirty2MSApp has {len(self.inputs)} input drops but requires at least 4"
+            )
         uvw = load_numpy(self.inputs[0])
         freq = load_numpy(self.inputs[1])
         dirty = load_numpy(self.inputs[2])
         weight_spectrum = load_numpy(self.inputs[3])
         epsilon = 1e-6  # unused
 
-        if self.pixsize_x == None:
+        if self.pixsize_x is None:
             self.pixsize_x = 1.0 / dirty.shape[0]
-        if self.pixsize_y == None:
+        if self.pixsize_y is None:
             self.pixsize_y = 1.0 / dirty.shape[1]
 
-        vis = wagg.dirty2ms(uvw, freq, dirty, weight_spectrum,
-            self.pixsize_x, self.pixsize_y, epsilon, self.do_wstacking)
+        vis = wagg.dirty2ms(
+            uvw,
+            freq,
+            dirty,
+            weight_spectrum,
+            self.pixsize_x,
+            self.pixsize_y,
+            epsilon,
+            self.do_wstacking,
+        )
 
         save_numpy(self.outputs[0], vis)
 
@@ -147,7 +178,7 @@ class CudaDirty2MSApp(BarrierAppDROP):
 # @param[in] port/uvw uvw/ndarray/
 #     \~English Port containing UVWs of shape (baselines, 3)
 # @param[in] port/freq freq/ndarray/
-#     \~English Port containing channel frequencies in Hz 
+#     \~English Port containing channel frequencies in Hz
 # @param[in] port/vis vis/ndarray/
 #     \~English Port containing visibilities of shape (baselines, channels, pols)
 # @param[in] port/weight_spectrum weight_spectrum/ndarray/
@@ -158,24 +189,29 @@ class CudaDirty2MSApp(BarrierAppDROP):
 #     \~English Port carrying output degridded visibilities of shape (baselines, channels, pols)
 # @par EAGLE_END
 class CudaNiftyApp(BarrierAppDROP):
-    component_meta = dlg_component('CudaNiftyApp', 'Cuda Nifty App.',
-                                    [dlg_batch_input('binary/*', [])],
-                                    [dlg_batch_output('binary/*', [])],
-                                    [dlg_streaming_input('binary/*')])
-    npix_x = dlg_int_param('npix_x', 64)
-    npix_y = dlg_int_param('npix_y', 64)
-    do_wstacking = dlg_bool_param('do_wstacking', None)
-    pixsize_x = dlg_float_param('pixsize_x', None)
-    pixsize_y = dlg_float_param('pixsize_y', None)
-    polarization = dlg_int_param('polarization', 0)
+    component_meta = dlg_component(
+        "CudaNiftyApp",
+        "Cuda Nifty App.",
+        [dlg_batch_input("binary/*", [])],
+        [dlg_batch_output("binary/*", [])],
+        [dlg_streaming_input("binary/*")],
+    )
+    npix_x = dlg_int_param("npix_x", 64)
+    npix_y = dlg_int_param("npix_y", 64)
+    do_wstacking = dlg_bool_param("do_wstacking", None)
+    pixsize_x = dlg_float_param("pixsize_x", None)
+    pixsize_y = dlg_float_param("pixsize_y", None)
+    polarization = dlg_int_param("polarization", 0)
 
     def run(self):
         if len(self.inputs) < 4:
-            raise DaliugeException(f"CudaDirt2MsApp has {len(self.inputs)} input drops but requires at least 4")
+            raise DaliugeException(
+                f"CudaDirt2MsApp has {len(self.inputs)} input drops but requires at least 4"
+            )
 
-        if self.pixsize_x == None:
+        if self.pixsize_x is None:
             self.pixsize_x = 1.0 / self.npix_x
-        if self.pixsize_y == None:
+        if self.pixsize_y is None:
             self.pixsize_y = 1.0 / self.npix_y
         epsilon = 1e-10
 
@@ -184,12 +220,29 @@ class CudaNiftyApp(BarrierAppDROP):
         vis = load_numpy(self.inputs[2])
         weight_spectrum = load_numpy(self.inputs[3])
 
-        image_dirty = wagg.ms2dirty(uvw, freq, vis, weight_spectrum,
-            self.npix_x, self.npix_y, self.pixsize_x, self.pixsize_y,
-            epsilon, self.do_wstacking)
+        image_dirty = wagg.ms2dirty(
+            uvw,
+            freq,
+            vis,
+            weight_spectrum,
+            self.npix_x,
+            self.npix_y,
+            self.pixsize_x,
+            self.pixsize_y,
+            epsilon,
+            self.do_wstacking,
+        )
         save_numpy(self.outputs[0], image_dirty)
 
-        vis_degridded = wagg.dirty2ms(uvw, freq, image_dirty, weight_spectrum,
-            self.pixsize_x, self.pixsize_y, epsilon, self.do_wstacking)
-        vis[:,:,self.polarization] = vis_degridded
+        vis_degridded = wagg.dirty2ms(
+            uvw,
+            freq,
+            image_dirty,
+            weight_spectrum,
+            self.pixsize_x,
+            self.pixsize_y,
+            epsilon,
+            self.do_wstacking,
+        )
+        vis[:: self.polarization] = vis_degridded
         save_numpy(self.outputs[1], vis)

@@ -1,0 +1,823 @@
+{
+    "modelData": {
+        "fileType": "palette",
+        "repoService": "GitHub",
+        "repoBranch": "master",
+        "repo": "ICRAR/EAGLE_test_repo",
+        "readonly": true,
+        "filePath": "dlg-nifty-components.palette",
+        "sha": "9ff3d1b",
+        "git_url": "git@github.com:ICRAR/dlg-nifty-components.git"
+    },
+    "nodeDataArray": [
+        {
+            "category": "PythonApp",
+            "categoryType": "Application",
+            "isData": false,
+            "isGroup": false,
+            "canHaveInputs": true,
+            "canHaveOutputs": true,
+            "drawOrderHint": 0,
+            "key": -1,
+            "text": "CudaDirty2MSApp",
+            "description": "CudaDirty2MSApp",
+            "collapsed": false,
+            "showPorts": false,
+            "streaming": false,
+            "subject": null,
+            "selected": false,
+            "expanded": false,
+            "inputApplicationName": "",
+            "outputApplicationName": "",
+            "exitApplicationName": "",
+            "inputApplicationType": "None",
+            "outputApplicationType": "None",
+            "exitApplicationType": "None",
+            "inputPorts": [
+                {
+                    "Id": "53e80c24-8e2b-4187-a02d-8a0de977e51c",
+                    "IdText": "uvw",
+                    "text": "uvw",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " uvw port"
+                },
+                {
+                    "Id": "da82ead9-184f-443b-89ba-f5d8681aeb4a",
+                    "IdText": "freq",
+                    "text": "freq",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " freq port"
+                },
+                {
+                    "Id": "ab42ac50-848e-4166-a958-4dcad195c8aa",
+                    "IdText": "image",
+                    "text": "image",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " dirty image port"
+                },
+                {
+                    "Id": "15153f08-eb59-4f61-9752-1addb5277488",
+                    "IdText": "weight_spectrum",
+                    "text": "weight_spectrum",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " weight spectrum port"
+                }
+            ],
+            "outputPorts": [
+                {
+                    "Id": "8f19b6eb-3bbc-498b-8f90-2aae0c09d72d",
+                    "IdText": "vis",
+                    "text": "vis",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " vis port"
+                }
+            ],
+            "inputLocalPorts": [],
+            "outputLocalPorts": [],
+            "inputAppFields": [],
+            "outputAppFields": [],
+            "fields": [
+                {
+                    "text": "appclass",
+                    "name": "appclass",
+                    "value": "dlg_nifty_components.CudaDirty2MSApp",
+                    "default": "dlg_nifty_components.CudaDirty2MSApp",
+                    "description": "Application class",
+                    "readonly": true,
+                    "type": "String",
+                    "precious": false
+                },
+                {
+                    "text": "do_wstacking",
+                    "name": "do_wstacking",
+                    "value": "True",
+                    "default": "True",
+                    "description": "whether to perform wstacking",
+                    "readonly": false,
+                    "type": "Bool",
+                    "precious": false
+                },
+                {
+                    "text": "pixsize_x",
+                    "name": "pixsize_x",
+                    "value": "",
+                    "default": "",
+                    "description": "pixel horizontal angular size in radians",
+                    "readonly": false,
+                    "type": "Float",
+                    "precious": false
+                },
+                {
+                    "text": "pixsize_y",
+                    "name": "pixsize_y",
+                    "value": "",
+                    "default": "",
+                    "description": "pixel vertical angular size in radians",
+                    "readonly": false,
+                    "type": "Float",
+                    "precious": false
+                },
+                {
+                    "text": "Execution time",
+                    "name": "execution_time",
+                    "value": 5,
+                    "default": 5,
+                    "description": "Estimated execution time",
+                    "readonly": false,
+                    "type": "Float",
+                    "precious": false
+                },
+                {
+                    "text": "Num CPUs",
+                    "name": "num_cpus",
+                    "value": 1,
+                    "default": 1,
+                    "description": "Number of cores used",
+                    "readonly": false,
+                    "type": "Integer",
+                    "precious": false
+                },
+                {
+                    "text": "Group start",
+                    "name": "group_start",
+                    "value": "false",
+                    "default": "false",
+                    "description": "Component is start of a group",
+                    "readonly": false,
+                    "type": "Boolean",
+                    "precious": false
+                }
+            ],
+            "git_url": "git@github.com:ICRAR/dlg-nifty-components.git",
+            "sha": "9ff3d1b"
+        },
+        {
+            "category": "PythonApp",
+            "categoryType": "Application",
+            "isData": false,
+            "isGroup": false,
+            "canHaveInputs": true,
+            "canHaveOutputs": true,
+            "drawOrderHint": 0,
+            "key": -2,
+            "text": "CudaMS2DirtyApp",
+            "description": "CudaMS2DirtyApp",
+            "collapsed": false,
+            "showPorts": false,
+            "streaming": false,
+            "subject": null,
+            "selected": false,
+            "expanded": false,
+            "inputApplicationName": "",
+            "outputApplicationName": "",
+            "exitApplicationName": "",
+            "inputApplicationType": "None",
+            "outputApplicationType": "None",
+            "exitApplicationType": "None",
+            "inputPorts": [
+                {
+                    "Id": "b4435cce-adb6-470e-bbda-eb909aa19ea3",
+                    "IdText": "uvw",
+                    "text": "uvw",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " uvw port"
+                },
+                {
+                    "Id": "ec0cac13-dc31-4cab-81e7-31ac2efb8a0a",
+                    "IdText": "freq",
+                    "text": "freq",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " freq port"
+                },
+                {
+                    "Id": "7b779876-8bb5-4af5-a05d-f4905490619d",
+                    "IdText": "vis",
+                    "text": "vis",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " vis port"
+                },
+                {
+                    "Id": "5c8f2841-31c0-4b5f-afa2-387014fe75a7",
+                    "IdText": "weight_spectrum",
+                    "text": "weight_spectrum",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " weight spectrum port"
+                }
+            ],
+            "outputPorts": [
+                {
+                    "Id": "aca023a8-d3d1-43ce-9caa-06415679ce04",
+                    "IdText": "image",
+                    "text": "image",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " dirty image port"
+                }
+            ],
+            "inputLocalPorts": [],
+            "outputLocalPorts": [],
+            "inputAppFields": [],
+            "outputAppFields": [],
+            "fields": [
+                {
+                    "text": "appclass",
+                    "name": "appclass",
+                    "value": "dlg_nifty_components.CudaMS2DirtyApp",
+                    "default": "dlg_nifty_components.CudaMS2DirtyApp",
+                    "description": "Application class",
+                    "readonly": true,
+                    "type": "String",
+                    "precious": false
+                },
+                {
+                    "text": "npix_x",
+                    "name": "npix_x",
+                    "value": "64",
+                    "default": "64",
+                    "description": "x dimensions of the dirty image",
+                    "readonly": false,
+                    "type": "Integer",
+                    "precious": false
+                },
+                {
+                    "text": "npix_y",
+                    "name": "npix_y",
+                    "value": "64",
+                    "default": "64",
+                    "description": "y dimensions of the dirty image",
+                    "readonly": false,
+                    "type": "Integer",
+                    "precious": false
+                },
+                {
+                    "text": "do_wstacking",
+                    "name": "do_wstacking",
+                    "value": "True",
+                    "default": "True",
+                    "description": "whether to perform wstacking",
+                    "readonly": false,
+                    "type": "Bool",
+                    "precious": false
+                },
+                {
+                    "text": "pixsize_x",
+                    "name": "pixsize_x",
+                    "value": "",
+                    "default": "",
+                    "description": "pixel horizontal angular size in radians",
+                    "readonly": false,
+                    "type": "Float",
+                    "precious": false
+                },
+                {
+                    "text": "pixsize_y",
+                    "name": "pixsize_y",
+                    "value": "",
+                    "default": "",
+                    "description": "pixel vertical angular size in radians",
+                    "readonly": false,
+                    "type": "Float",
+                    "precious": false
+                },
+                {
+                    "text": "Execution time",
+                    "name": "execution_time",
+                    "value": 5,
+                    "default": 5,
+                    "description": "Estimated execution time",
+                    "readonly": false,
+                    "type": "Float",
+                    "precious": false
+                },
+                {
+                    "text": "Num CPUs",
+                    "name": "num_cpus",
+                    "value": 1,
+                    "default": 1,
+                    "description": "Number of cores used",
+                    "readonly": false,
+                    "type": "Integer",
+                    "precious": false
+                },
+                {
+                    "text": "Group start",
+                    "name": "group_start",
+                    "value": "false",
+                    "default": "false",
+                    "description": "Component is start of a group",
+                    "readonly": false,
+                    "type": "Boolean",
+                    "precious": false
+                }
+            ],
+            "git_url": "git@github.com:ICRAR/dlg-nifty-components.git",
+            "sha": "9ff3d1b"
+        },
+        {
+            "category": "PythonApp",
+            "categoryType": "Application",
+            "isData": false,
+            "isGroup": false,
+            "canHaveInputs": true,
+            "canHaveOutputs": true,
+            "drawOrderHint": 0,
+            "key": -3,
+            "text": "CudaNiftyApp",
+            "description": "A gridder and degridder APP of ska-gridder-nifty-cuda that produces a gridded image from visibilities and a set of degridded visibilities of the image.",
+            "collapsed": false,
+            "showPorts": false,
+            "streaming": false,
+            "subject": null,
+            "selected": false,
+            "expanded": false,
+            "inputApplicationName": "",
+            "outputApplicationName": "",
+            "exitApplicationName": "",
+            "inputApplicationType": "None",
+            "outputApplicationType": "None",
+            "exitApplicationType": "None",
+            "inputPorts": [
+                {
+                    "Id": "53c08c42-7d54-40aa-be52-faf6f2a936eb",
+                    "IdText": "uvw",
+                    "text": "uvw",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " Port containing UVWs of shape (baselines, 3)"
+                },
+                {
+                    "Id": "c1cd0a13-40d4-4bac-9d51-2a10a1e21a9a",
+                    "IdText": "freq",
+                    "text": "freq",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " Port containing channel frequencies in Hz"
+                },
+                {
+                    "Id": "63406a92-0707-43f6-8324-a0bd05f9bfc9",
+                    "IdText": "vis",
+                    "text": "vis",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " Port containing visibilities of shape (baselines, channels, pols)"
+                },
+                {
+                    "Id": "e125e087-f386-4a74-ae48-06871c171841",
+                    "IdText": "weight_spectrum",
+                    "text": "weight_spectrum",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " Port containing weight spectrum of shape (baselines, channels)"
+                }
+            ],
+            "outputPorts": [
+                {
+                    "Id": "25b5bd5f-8c19-400b-9aaf-2c75b67d380e",
+                    "IdText": "image",
+                    "text": "image",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " Port carrying the output dirty image of shape (npix_x, npix_y)"
+                },
+                {
+                    "Id": "76a999fe-e978-4f6a-86ce-1bca5525d493",
+                    "IdText": "vis",
+                    "text": "vis",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " Port carrying output degridded visibilities of shape (baselines, channels, pols)"
+                }
+            ],
+            "inputLocalPorts": [],
+            "outputLocalPorts": [],
+            "inputAppFields": [],
+            "outputAppFields": [],
+            "fields": [
+                {
+                    "text": "appclass",
+                    "name": "appclass",
+                    "value": "dlg_nifty_components.CudaNiftyApp",
+                    "default": "dlg_nifty_components.CudaNiftyApp",
+                    "description": "Application class",
+                    "readonly": true,
+                    "type": "String",
+                    "precious": false
+                },
+                {
+                    "text": "npix_x",
+                    "name": "npix_x",
+                    "value": "64",
+                    "default": "64",
+                    "description": "x dimensions of the dirty image",
+                    "readonly": false,
+                    "type": "Integer",
+                    "precious": false
+                },
+                {
+                    "text": "npix_y",
+                    "name": "npix_y",
+                    "value": "64",
+                    "default": "64",
+                    "description": "y dimensions of the dirty image",
+                    "readonly": false,
+                    "type": "Integer",
+                    "precious": false
+                },
+                {
+                    "text": "do_wstacking",
+                    "name": "do_wstacking",
+                    "value": "True",
+                    "default": "True",
+                    "description": "whether to perform wstacking",
+                    "readonly": false,
+                    "type": "Bool",
+                    "precious": false
+                },
+                {
+                    "text": "pixsize_x",
+                    "name": "pixsize_x",
+                    "value": "",
+                    "default": "",
+                    "description": "pixel horizontal angular size in radians",
+                    "readonly": false,
+                    "type": "Float",
+                    "precious": false
+                },
+                {
+                    "text": "pixsize_y",
+                    "name": "pixsize_y",
+                    "value": "",
+                    "default": "",
+                    "description": "pixel vertical angular size in radians",
+                    "readonly": false,
+                    "type": "Float",
+                    "precious": false
+                },
+                {
+                    "text": "polarization",
+                    "name": "polarization",
+                    "value": "0",
+                    "default": "0",
+                    "description": "polarization to perform gridding to",
+                    "readonly": false,
+                    "type": "Integer",
+                    "precious": false
+                },
+                {
+                    "text": "Execution time",
+                    "name": "execution_time",
+                    "value": 5,
+                    "default": 5,
+                    "description": "Estimated execution time",
+                    "readonly": false,
+                    "type": "Float",
+                    "precious": false
+                },
+                {
+                    "text": "Num CPUs",
+                    "name": "num_cpus",
+                    "value": 1,
+                    "default": 1,
+                    "description": "Number of cores used",
+                    "readonly": false,
+                    "type": "Integer",
+                    "precious": false
+                },
+                {
+                    "text": "Group start",
+                    "name": "group_start",
+                    "value": "false",
+                    "default": "false",
+                    "description": "Component is start of a group",
+                    "readonly": false,
+                    "type": "Boolean",
+                    "precious": false
+                }
+            ],
+            "git_url": "git@github.com:ICRAR/dlg-nifty-components.git",
+            "sha": "9ff3d1b"
+        },
+        {
+            "category": "PythonApp",
+            "categoryType": "Application",
+            "isData": false,
+            "isGroup": false,
+            "canHaveInputs": true,
+            "canHaveOutputs": true,
+            "drawOrderHint": 0,
+            "key": -4,
+            "text": "Dirty2MSApp",
+            "description": "CudaDirty2MSApp",
+            "collapsed": false,
+            "showPorts": false,
+            "streaming": false,
+            "subject": null,
+            "selected": false,
+            "expanded": false,
+            "inputApplicationName": "",
+            "outputApplicationName": "",
+            "exitApplicationName": "",
+            "inputApplicationType": "None",
+            "outputApplicationType": "None",
+            "exitApplicationType": "None",
+            "inputPorts": [
+                {
+                    "Id": "b2db6ccc-3953-48f6-880c-7fb1ed1df808",
+                    "IdText": "uvw",
+                    "text": "uvw",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " uvw port"
+                },
+                {
+                    "Id": "a2948b0e-7761-49c9-a805-350f864006be",
+                    "IdText": "freq",
+                    "text": "freq",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " freq port"
+                },
+                {
+                    "Id": "d4e29d63-b53c-4bf8-88a7-2a2047a23369",
+                    "IdText": "image",
+                    "text": "image",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " dirty image port"
+                },
+                {
+                    "Id": "3242fa06-e078-45fc-b2ca-fc604020a52c",
+                    "IdText": "weight_spectrum",
+                    "text": "weight_spectrum",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " weight spectrum port"
+                }
+            ],
+            "outputPorts": [
+                {
+                    "Id": "2f30bc22-f76e-4a5c-8a6b-822bd15f2ca3",
+                    "IdText": "vis",
+                    "text": "vis",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " vis port"
+                }
+            ],
+            "inputLocalPorts": [],
+            "outputLocalPorts": [],
+            "inputAppFields": [],
+            "outputAppFields": [],
+            "fields": [
+                {
+                    "text": "appclass",
+                    "name": "appclass",
+                    "value": "dlg_nifty_components.Dirty2MSApp",
+                    "default": "dlg_nifty_components.Dirty2MSApp",
+                    "description": "Application class",
+                    "readonly": true,
+                    "type": "String",
+                    "precious": false
+                },
+                {
+                    "text": "do_wstacking",
+                    "name": "do_wstacking",
+                    "value": "True",
+                    "default": "True",
+                    "description": "whether to perform wstacking",
+                    "readonly": false,
+                    "type": "Bool",
+                    "precious": false
+                },
+                {
+                    "text": "pixsize_x",
+                    "name": "pixsize_x",
+                    "value": "",
+                    "default": "",
+                    "description": "pixel horizontal angular size in radians",
+                    "readonly": false,
+                    "type": "Float",
+                    "precious": false
+                },
+                {
+                    "text": "pixsize_y",
+                    "name": "pixsize_y",
+                    "value": "",
+                    "default": "",
+                    "description": "pixel vertical angular size in radians",
+                    "readonly": false,
+                    "type": "Float",
+                    "precious": false
+                },
+                {
+                    "text": "Execution time",
+                    "name": "execution_time",
+                    "value": 5,
+                    "default": 5,
+                    "description": "Estimated execution time",
+                    "readonly": false,
+                    "type": "Float",
+                    "precious": false
+                },
+                {
+                    "text": "Num CPUs",
+                    "name": "num_cpus",
+                    "value": 1,
+                    "default": 1,
+                    "description": "Number of cores used",
+                    "readonly": false,
+                    "type": "Integer",
+                    "precious": false
+                },
+                {
+                    "text": "Group start",
+                    "name": "group_start",
+                    "value": "false",
+                    "default": "false",
+                    "description": "Component is start of a group",
+                    "readonly": false,
+                    "type": "Boolean",
+                    "precious": false
+                }
+            ],
+            "git_url": "git@github.com:ICRAR/dlg-nifty-components.git",
+            "sha": "9ff3d1b"
+        },
+        {
+            "category": "PythonApp",
+            "categoryType": "Application",
+            "isData": false,
+            "isGroup": false,
+            "canHaveInputs": true,
+            "canHaveOutputs": true,
+            "drawOrderHint": 0,
+            "key": -5,
+            "text": "MS2DirtyApp",
+            "description": "CudaMS2DirtyApp",
+            "collapsed": false,
+            "showPorts": false,
+            "streaming": false,
+            "subject": null,
+            "selected": false,
+            "expanded": false,
+            "inputApplicationName": "",
+            "outputApplicationName": "",
+            "exitApplicationName": "",
+            "inputApplicationType": "None",
+            "outputApplicationType": "None",
+            "exitApplicationType": "None",
+            "inputPorts": [
+                {
+                    "Id": "a5a927ec-e3fc-4982-87c7-d36240972a8c",
+                    "IdText": "uvw",
+                    "text": "uvw",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " uvw port"
+                },
+                {
+                    "Id": "374a3602-2f44-4142-b2f9-c9167052b6ca",
+                    "IdText": "freq",
+                    "text": "freq",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " freq port"
+                },
+                {
+                    "Id": "83ae7bb7-ae3f-4391-81e0-ad46760567a5",
+                    "IdText": "vis",
+                    "text": "vis",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " vis port"
+                },
+                {
+                    "Id": "ab1f94bd-19ca-4878-b8fd-da761b7066cc",
+                    "IdText": "weight_spectrum",
+                    "text": "weight_spectrum",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " weight spectrum port"
+                }
+            ],
+            "outputPorts": [
+                {
+                    "Id": "dd78d45e-9306-46e5-95db-6f4c943dafe6",
+                    "IdText": "image",
+                    "text": "image",
+                    "event": false,
+                    "type": "ndarray",
+                    "description": " dirty image port"
+                }
+            ],
+            "inputLocalPorts": [],
+            "outputLocalPorts": [],
+            "inputAppFields": [],
+            "outputAppFields": [],
+            "fields": [
+                {
+                    "text": "appclass",
+                    "name": "appclass",
+                    "value": "dlg_nifty_components.MS2DirtyApp",
+                    "default": "dlg_nifty_components.MS2DirtyApp",
+                    "description": "Application class",
+                    "readonly": true,
+                    "type": "String",
+                    "precious": false
+                },
+                {
+                    "text": "npix_x",
+                    "name": "npix_x",
+                    "value": "64",
+                    "default": "64",
+                    "description": "x dimensions of the dirty image",
+                    "readonly": false,
+                    "type": "Integer",
+                    "precious": false
+                },
+                {
+                    "text": "npix_y",
+                    "name": "npix_y",
+                    "value": "64",
+                    "default": "64",
+                    "description": "y dimensions of the dirty image",
+                    "readonly": false,
+                    "type": "Integer",
+                    "precious": false
+                },
+                {
+                    "text": "do_wstacking",
+                    "name": "do_wstacking",
+                    "value": "True",
+                    "default": "True",
+                    "description": "whether to perform wstacking",
+                    "readonly": false,
+                    "type": "Bool",
+                    "precious": false
+                },
+                {
+                    "text": "pixsize_x",
+                    "name": "pixsize_x",
+                    "value": "",
+                    "default": "",
+                    "description": "pixel horizontal angular size in radians",
+                    "readonly": false,
+                    "type": "Float",
+                    "precious": false
+                },
+                {
+                    "text": "pixsize_y",
+                    "name": "pixsize_y",
+                    "value": "",
+                    "default": "",
+                    "description": "pixel vertical angular size in radians",
+                    "readonly": false,
+                    "type": "Float",
+                    "precious": false
+                },
+                {
+                    "text": "Execution time",
+                    "name": "execution_time",
+                    "value": 5,
+                    "default": 5,
+                    "description": "Estimated execution time",
+                    "readonly": false,
+                    "type": "Float",
+                    "precious": false
+                },
+                {
+                    "text": "Num CPUs",
+                    "name": "num_cpus",
+                    "value": 1,
+                    "default": 1,
+                    "description": "Number of cores used",
+                    "readonly": false,
+                    "type": "Integer",
+                    "precious": false
+                },
+                {
+                    "text": "Group start",
+                    "name": "group_start",
+                    "value": "false",
+                    "default": "false",
+                    "description": "Component is start of a group",
+                    "readonly": false,
+                    "type": "Boolean",
+                    "precious": false
+                }
+            ],
+            "git_url": "git@github.com:ICRAR/dlg-nifty-components.git",
+            "sha": "9ff3d1b"
+        }
+    ],
+    "linkDataArray": []
+}
