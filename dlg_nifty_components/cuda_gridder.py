@@ -1,39 +1,17 @@
-#
-#    ICRAR - International Centre for Radio Astronomy Research
-#    (c) UWA - The University of Western Australia, 2017
-#    Copyright by UWA (in the framework of the ICRAR)
-#    All rights reserved
-#
-#    This program is free software; you can redistribute it and/or
-#    modify it under the terms of the GNU General Public License
-#    as published by the Free Software Foundation; either version 2
-#    of the License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with this program; if not, write to the Free Software
-#    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-#    MA  02110-1301, USA.
-
 import io
 import numpy as np
-
 import wagg
 from dlg.exceptions import DaliugeException
 from dlg.drop import BarrierAppDROP
-from dlg.droputils import save_numpy, load_numpy
 from dlg.meta import (dlg_batch_input, dlg_batch_output, dlg_component,
                       dlg_float_param, dlg_int_param, dlg_streaming_input,
                       dlg_string_param, dlg_bool_param)
+from dlg_nifty_components.droputils import save_numpy, load_numpy
 
 
 ##
 # @brief CudaMS2DirtyApp
-# @details CudaMS2DirtyApp
+# @details Converts measurement set data to a dirty image
 # @par EAGLE_START
 # @param category PythonApp
 # @param requirements wagg/
@@ -73,7 +51,7 @@ class CudaMS2DirtyApp(BarrierAppDROP):
 
     def run(self):
         if len(self.inputs) < 4:
-            raise DaliugeException(f"CudaDirt2MsApp has {len(self.inputs)} input drops but requires at least 4")
+            raise DaliugeException(f"CudaMS2DirtyApp has {len(self.inputs)} input drops but requires at least 4")
         uvw = load_numpy(self.inputs[0])
         freq = load_numpy(self.inputs[1])
         vis = load_numpy(self.inputs[2])
@@ -94,7 +72,7 @@ class CudaMS2DirtyApp(BarrierAppDROP):
 
 ##
 # @brief CudaDirty2MSApp
-# @details CudaDirty2MSApp
+# @details Converts a dirty image to measurement set visibilities
 # @par EAGLE_START
 # @param category PythonApp
 # @param[in] param/appclass appclass/dlg_nifty_components.CudaDirty2MSApp/String/readonly/False/
@@ -127,7 +105,7 @@ class CudaDirty2MSApp(BarrierAppDROP):
 
     def run(self):
         if len(self.inputs) < 4:
-            raise DaliugeException(f"CudaDirt2MsApp has {len(self.inputs)} input drops but requires at least 4")
+            raise DaliugeException(f"CudaDirty2MSApp has {len(self.inputs)} input drops but requires at least 4")
         uvw = load_numpy(self.inputs[0])
         freq = load_numpy(self.inputs[1])
         dirty = load_numpy(self.inputs[2])

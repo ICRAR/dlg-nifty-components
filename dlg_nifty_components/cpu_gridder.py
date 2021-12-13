@@ -1,17 +1,16 @@
 import io
-
 import numpy as np
 import ducc0
 from dlg.exceptions import DaliugeException
 from dlg.drop import BarrierAppDROP
-from dlg.droputils import save_numpy, load_numpy
 from dlg.meta import (dlg_batch_input, dlg_batch_output, dlg_component,
                       dlg_float_param, dlg_int_param, dlg_streaming_input,
                       dlg_string_param, dlg_bool_param)
 
+from dlg_nifty_components.droputils import save_numpy, load_numpy
 ##
 # @brief MS2DirtyApp
-# @details CudaMS2DirtyApp
+# @details Converts measurement set data to a dirty image
 # @par EAGLE_START
 # @param category PythonApp
 # @param requirements wagg/
@@ -39,7 +38,7 @@ from dlg.meta import (dlg_batch_input, dlg_batch_output, dlg_component,
 #     \~English dirty image port
 # @par EAGLE_END
 class MS2DirtyApp(BarrierAppDROP):
-    component_meta = dlg_component('MS2DirtyApp', 'Nifty Ms2Dirty App.',
+    component_meta = dlg_component('MS2DirtyApp', 'Nifty MS2Dirty App.',
                                     [dlg_batch_input('binary/*', [])],
                                     [dlg_batch_output('binary/*', [])],
                                     [dlg_streaming_input('binary/*')])
@@ -51,7 +50,7 @@ class MS2DirtyApp(BarrierAppDROP):
 
     def run(self):
         if len(self.inputs) < 4:
-            raise DaliugeException(f"CudaDirt2MsApp has {len(self.inputs)} input drops but requires at least 4")
+            raise DaliugeException(f"MS2DirtyApp has {len(self.inputs)} input drops but requires at least 4")
         uvw = load_numpy(self.inputs[0])
         freq = load_numpy(self.inputs[1])
         vis = load_numpy(self.inputs[2])
@@ -72,7 +71,7 @@ class MS2DirtyApp(BarrierAppDROP):
 
 ##
 # @brief Dirty2MSApp
-# @details CudaDirty2MSApp
+# @details Converts a dirty image to measurement set visibilities
 # @par EAGLE_START
 # @param category PythonApp
 # @param[in] param/appclass appclass/dlg_nifty_components.Dirty2MSApp/String/readonly/False/
@@ -95,7 +94,7 @@ class MS2DirtyApp(BarrierAppDROP):
 #     \~English vis port
 # @par EAGLE_END
 class Dirty2MSApp(BarrierAppDROP):
-    component_meta = dlg_component('Dirty2MSApp', 'Nifty Ms2Dirty App.',
+    component_meta = dlg_component('Dirty2MSApp', 'Nifty Dirty2MS App.',
                                     [dlg_batch_input('binary/*', [])],
                                     [dlg_batch_output('binary/*', [])],
                                     [dlg_streaming_input('binary/*')])
@@ -105,7 +104,7 @@ class Dirty2MSApp(BarrierAppDROP):
 
     def run(self):
         if len(self.inputs) < 4:
-            raise DaliugeException(f"CudaDirt2MsApp has {len(self.inputs)} input drops but requires at least 4")
+            raise DaliugeException(f"Dirty2MsApp has {len(self.inputs)} input drops but requires at least 4")
         uvw = load_numpy(self.inputs[0])
         freq = load_numpy(self.inputs[1])
         dirty = load_numpy(self.inputs[2])
