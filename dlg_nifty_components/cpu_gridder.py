@@ -32,15 +32,15 @@ from dlg_nifty_components.droputils import save_numpy, load_numpy
 #     \~English pixel horizontal angular size in radians
 # @param[in] param/pixsize_y pixsize_y//Float/readwrite/False/
 #     \~English pixel vertical angular size in radians
-# @param[in] port/uvw uvw/ndarray/
+# @param[in] port/uvw uvw/npy/
 #     \~English uvw port
-# @param[in] port/freq freq/ndarray/
+# @param[in] port/freq freq/npy/
 #     \~English freq port
-# @param[in] port/vis vis/ndarray/
+# @param[in] port/vis vis/npy/
 #     \~English vis port
-# @param[in] port/weight_spectrum weight_spectrum/ndarray/
+# @param[in] port/weight_spectrum weight_spectrum/npy/
 #     \~English weight spectrum port
-# @param[out] port/image image/ndarray/
+# @param[out] port/image image/npy/
 #     \~English dirty image port
 # @par EAGLE_END
 class MS2DirtyApp(BarrierAppDROP):
@@ -102,15 +102,15 @@ class MS2DirtyApp(BarrierAppDROP):
 #     \~English pixel horizontal angular size in radians
 # @param[in] param/pixsize_y pixsize_y//Float/readwrite/False/
 #     \~English pixel vertical angular size in radians
-# @param[in] port/uvw uvw/ndarray/
+# @param[in] port/uvw uvw/npy/
 #     \~English uvw port
-# @param[in] port/freq freq/ndarray/
+# @param[in] port/freq freq/npy/
 #     \~English freq port
-# @param[in] port/image image/ndarray/
+# @param[in] port/image image/npy/
 #     \~English dirty image port
-# @param[in] port/weight_spectrum weight_spectrum/ndarray/
+# @param[in] port/weight_spectrum weight_spectrum/npy/
 #     \~English weight spectrum port
-# @param[out] port/vis vis/ndarray/
+# @param[out] port/vis vis/npy/
 #     \~English vis port
 # @par EAGLE_END
 class Dirty2MSApp(BarrierAppDROP):

@@ -31,15 +31,15 @@ from dlg_nifty_components.droputils import save_numpy, load_numpy
 #     \~English pixel horizontal angular size in radians
 # @param[in] param/pixsize_y pixsize_y//Float/readwrite/False/
 #     \~English pixel vertical angular size in radians
-# @param[in] port/uvw uvw/ndarray/
+# @param[in] port/uvw uvw/npy/
 #     \~English uvw port
-# @param[in] port/freq freq/ndarray/
+# @param[in] port/freq freq/npy/
 #     \~English freq port
-# @param[in] port/vis vis/ndarray/
+# @param[in] port/vis vis/npy/
 #     \~English vis port
-# @param[in] port/weight_spectrum weight_spectrum/ndarray/
+# @param[in] port/weight_spectrum weight_spectrum/npy/
 #     \~English weight spectrum port
-# @param[out] port/image image/ndarray/
+# @param[out] port/image image/npy/
 #     \~English dirty image port
 # @par EAGLE_END
 class CudaMS2DirtyApp(BarrierAppDROP):
@@ -101,15 +101,15 @@ class CudaMS2DirtyApp(BarrierAppDROP):
 #     \~English pixel horizontal angular size in radians
 # @param[in] param/pixsize_y pixsize_y//Float/readwrite/False/
 #     \~English pixel vertical angular size in radians
-# @param[in] port/uvw uvw/ndarray/
+# @param[in] port/uvw uvw/npy/
 #     \~English uvw port
-# @param[in] port/freq freq/ndarray/
+# @param[in] port/freq freq/npy/
 #     \~English freq port
-# @param[in] port/image image/ndarray/
+# @param[in] port/image image/npy/
 #     \~English dirty image port
-# @param[in] port/weight_spectrum weight_spectrum/ndarray/
+# @param[in] port/weight_spectrum weight_spectrum/npy/
 #     \~English weight spectrum port
-# @param[out] port/vis vis/ndarray/
+# @param[out] port/vis vis/npy/
 #     \~English vis port
 # @par EAGLE_END
 class CudaDirty2MSApp(BarrierAppDROP):
@@ -175,17 +175,17 @@ class CudaDirty2MSApp(BarrierAppDROP):
 #     \~English pixel vertical angular size in radians
 # @param[in] param/polarization polarization/0/Integer/readwrite/False/
 #     \~English polarization to perform gridding to
-# @param[in] port/uvw uvw/ndarray/
+# @param[in] port/uvw uvw/npy/
 #     \~English Port containing UVWs of shape (baselines, 3)
-# @param[in] port/freq freq/ndarray/
+# @param[in] port/freq freq/npy/
 #     \~English Port containing channel frequencies in Hz
-# @param[in] port/vis vis/ndarray/
+# @param[in] port/vis vis/npy/
 #     \~English Port containing visibilities of shape (baselines, channels, pols)
-# @param[in] port/weight_spectrum weight_spectrum/ndarray/
+# @param[in] port/weight_spectrum weight_spectrum/npy/
 #     \~English Port containing weight spectrum of shape (baselines, channels)
-# @param[out] port/image image/ndarray/
+# @param[out] port/image image/npy/
 #     \~English Port carrying the output dirty image of shape (npix_x, npix_y)
-# @param[out] port/vis vis/ndarray/
+# @param[out] port/vis vis/npy/
 #     \~English Port carrying output degridded visibilities of shape (baselines, channels, pols)
 # @par EAGLE_END
 class CudaNiftyApp(BarrierAppDROP):
