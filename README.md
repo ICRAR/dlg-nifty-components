@@ -4,7 +4,6 @@
 [![CI](https://github.com/ICRAR/dlg-nifty-components/actions/workflows/main.yml/badge.svg)](https://github.com/ICRAR/dlg-nifty-components/actions/workflows/main.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-
 Awesome dlg-nifty-components created by ICRAR
 
 ## Installation
@@ -27,6 +26,8 @@ docker exec -t daliuge-engine bash -c 'pip install --prefix=$DLG_ROOT/code dlg_n
 
 ## Usage
 
+### Python
+
 For example the MS2DirtyApp component will be available to the engine when you specify
 
 ```python
@@ -36,3 +37,47 @@ MS2DirtyApp('a','a')
 ```
 
 in the AppClass field of a Python Branch component. The EAGLE palette associated with these components are also generated and can be loaded directly into EAGLE. In that case all the fields are correctly populated for the respective components.
+
+### DALiuGE Docker App
+
+Build the container image for use as a daliuge docker app:
+
+```bash
+docker build -t dlg-nifty-components -f ./Containerfile .
+```
+
+### DALiuGE Python App
+
+For development purposes it is preferable to install and run dlg-nifty-components as a python app for fast recompilation of dynamically linked binaries. To do this you must first install a cuda version in daliuge-common or daliuge-engine followed by python-dev, numpy and g++. daliuge-nifty-components will then compile and install wagg for cuda acceleration.
+
+daliuge-common/Dockerfile.dev
+
+```bash
+RUN apt install -y wget gnupg2 software-properties-common
+RUN mkdir -p /code && cd /code && \
+    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin && \
+    mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600 && \
+    apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub && \
+    add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /" && \
+    apt update
+
+RUN DEBIAN_FRONTEND=noninteractive apt -y --no-install-recommends install \
+    cuda-minimal-build-11-2 cuda-libraries-11-2 cuda-libraries-dev-11-2 && \
+    ln -s /usr/local/cuda-11.2 /usr/local/cuda && \
+    ln -s /usr/local/cuda/targets/x86_64-linux/lib /usr/local/cuda/lib && \
+    ln -s /usr/local/cuda/targets/x86_64-linux/include /usr/local/cuda/include
+```
+
+daliuge-engine/Dockerfile.dev
+
+```bash
+RUN apt install -y git python3-dev g++
+RUN pip install 'git+https://github.com/ICRAR/dlg-nifty-components.git'
+```
+
+run_engine.sh
+
+```bash
+# append configured nvidia-docker arguments here, e.g.
+DOCKER_OPTS=$DOCKER_OPTS --gpus=all --privileged
+```
