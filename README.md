@@ -4,7 +4,7 @@
 [![CI](https://github.com/ICRAR/dlg-nifty-components/actions/workflows/main.yml/badge.svg)](https://github.com/ICRAR/dlg-nifty-components/actions/workflows/main.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-Awesome dlg-nifty-components created by ICRAR
+dlg-nifty-components contains a collection of cpu and gpu nifty gridding/degridding implementations for radio interferometry datasets.
 
 ## Installation
 
@@ -12,41 +12,15 @@ There are multiple options for the installation, depending on how you are intend
 
 ## Install it from PyPI
 
-### Engine in virtual environment
+### Prerequisites
 
-```bash
-pip install dlg_nifty_components
-```
+The following packages are required before installation such that dlg-nifty-components can compile it's dependencies:
+* g++
+* python3-dev
+* numpy
+* cuda-libraries-dev
 
-### Engine in Docker container
-
-```bash
-docker exec -t daliuge-engine bash -c 'pip install --prefix=$DLG_ROOT/code dlg_nifty_components'
-```
-
-## Usage
-
-### Python
-
-For example the MS2DirtyApp component will be available to the engine when you specify
-
-```python
-from daliuge_component_nifty import MS2DirtyApp
-
-MS2DirtyApp('a','a')
-```
-
-in the AppClass field of a Python Branch component. The EAGLE palette associated with these components are also generated and can be loaded directly into EAGLE. In that case all the fields are correctly populated for the respective components.
-
-### DALiuGE Docker App
-
-Build the container image for use as a daliuge docker app:
-
-```bash
-docker build -t dlg-nifty-components -f ./Containerfile .
-```
-
-### DALiuGE Python App
+### DALiuGE Engine Python App in Docker Container
 
 For development purposes it is preferable to install and run dlg-nifty-components as a python app for fast recompilation of dynamically linked binaries. To do this you must first install a cuda version in daliuge-common or daliuge-engine followed by python-dev, numpy and g++. daliuge-nifty-components will then compile and install wagg for cuda acceleration.
 
@@ -71,8 +45,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt -y --no-install-recommends install \
 daliuge-engine/Dockerfile.dev
 
 ```bash
-RUN apt install -y git python3-dev g++
-RUN pip install 'git+https://github.com/ICRAR/dlg-nifty-components.git'
+RUN apt install -y python3-dev g++
 ```
 
 run_engine.sh
@@ -80,4 +53,40 @@ run_engine.sh
 ```bash
 # append configured nvidia-docker arguments here, e.g.
 DOCKER_OPTS=$DOCKER_OPTS --gpus=all --privileged
+```
+
+dlg-nifty-components may be installed before or after DALiuGE engine is running:
+
+```bash
+docker exec -t daliuge-engine bash -c 'pip install --prefix=$DLG_ROOT/code dlg_nifty_components'
+```
+
+### EAGLE Palette
+
+An EAGLE .palette file can be conveniently generated locally using command:
+
+```bash 
+bash ./build_palatte.sh
+```
+
+## Usage
+
+### Python
+
+For example the MS2DirtyApp component will be available to the engine when you specify
+
+```python
+from daliuge_component_nifty import MS2DirtyApp
+
+MS2DirtyApp('a','a')
+```
+
+in the AppClass field of a Python Branch component. The EAGLE palette associated with these components are also generated and can be loaded directly into EAGLE. In that case all the fields are correctly populated for the respective components.
+
+### DALiuGE Docker App
+
+Optionallyb uild the container image for use as a daliuge docker app:
+
+```bash
+docker build -t dlg-nifty-components -f ./Containerfile .
 ```
