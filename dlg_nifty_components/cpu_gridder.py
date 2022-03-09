@@ -10,13 +10,12 @@ from dlg.meta import (
     dlg_streaming_input,
     dlg_bool_param,
 )
-
-from dlg_nifty_components.droputils import save_numpy, load_numpy
+from dlg.droputils import save_numpy, load_numpy
 
 
 ##
 # @brief MS2DirtyApp
-# @details Converts measurement set data to a dirty image
+# @details Converts measurement set data to a dirty image. 
 # @par EAGLE_START
 # @param category PythonApp
 # @param requirements wagg/

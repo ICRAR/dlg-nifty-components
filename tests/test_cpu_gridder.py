@@ -2,8 +2,8 @@ import pytest
 import numpy as np
 
 from dlg.exceptions import DaliugeException
-from dlg_nifty_components import MS2DirtyApp, Dirty2MSApp
-from dlg_nifty_components.droputils import save_numpy
+from dlg.droputils import save_numpy
+from dlg_nifty_components.cpu_gridder import MS2DirtyApp, Dirty2MSApp
 from dlg.drop import InMemoryDROP
 
 given = pytest.mark.parametrize

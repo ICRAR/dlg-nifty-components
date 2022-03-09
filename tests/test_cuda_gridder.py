@@ -1,22 +1,33 @@
+import unittest
 import pytest
 import numpy as np
 
 from dlg.exceptions import DaliugeException
-from dlg_nifty_components import CudaMS2DirtyApp, CudaDirty2MSApp
-from dlg_nifty_components.droputils import save_numpy
 from dlg.drop import InMemoryDROP
+from dlg.droputils import save_numpy
 
 given = pytest.mark.parametrize
 
+try:
+    from dlg_nifty_components.cuda_gridder import CudaMS2DirtyApp, CudaDirty2MSApp
+    cuda_enabled = True
+except ImportError:
+    cuda_enabled = False
 
+
+@unittest.skipIf(cuda_enabled is False, 'wagg not installed')
 def test_CudaMS2DirtyApp_exceptions():
+    """Tests that component raises exception on invalid configurations"""
     app = CudaMS2DirtyApp("a", "a")
 
     with pytest.raises(DaliugeException) as e:
         app.run()
 
 
+@unittest.skipIf(cuda_enabled is False, 'wagg not installed')
 def test_CudaMS2DirtyApp():
+    """Tests that app executes with a valid configuration"""
+
     app = CudaMS2DirtyApp("a", "a")
 
     # Test data dimensions.
@@ -64,13 +75,18 @@ def test_CudaMS2DirtyApp():
     app.run()
 
 
+@unittest.skipIf(cuda_enabled is False, 'wagg not installed')
 def test_CudaDirty2MSApp_exceptions():
+    """Tests that component raises exception on invalid configurations"""
     app = CudaDirty2MSApp("a", "a")
     with pytest.raises(DaliugeException) as e:
         app.run()
 
 
+@unittest.skipIf(cuda_enabled is False, 'wagg not installed')
 def test_CudaDirty2MSApp():
+    """Tests that app executes with a valid configuration"""
+
     app = CudaDirty2MSApp("a", "a")
 
     # Test data dimensions.
