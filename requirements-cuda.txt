@@ -1,0 +1,1 @@
+wagg @ git+https://gitlab.com/ska-telescope/sdp/ska-gridder-nifty-cuda.git@thread-safe-python#subdirectory=python

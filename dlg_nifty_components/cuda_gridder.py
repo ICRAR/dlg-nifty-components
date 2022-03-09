@@ -10,7 +10,7 @@ from dlg.meta import (
     dlg_streaming_input,
     dlg_bool_param,
 )
-from dlg_nifty_components.droputils import save_numpy, load_numpy
+from dlg.droputils import save_numpy, load_numpy
 
 
 ##

@@ -32,7 +32,7 @@ def read_requirements(path):
 setup(
     name="dlg_nifty_components",
     version=read("dlg_nifty_components", "VERSION"),
-    description="Awesome dlg_nifty_components created by ICRAR",
+    description="dlg_nifty_components created by ICRAR",
     url="https://github.com/ICRAR/dlg-nifty-components/",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
@@ -40,8 +40,8 @@ setup(
     license="BSD License",
     packages=find_packages(exclude=["tests", ".github"]),
     install_requires=read_requirements("requirements.txt"),
-    entry_points={
-        "console_scripts": ["dlg_nifty_components = dlg_nifty_components.__main__:main"]
+    extras_require={
+        "cuda": read_requirements("requirements-cuda.txt"),
+        "test": read_requirements("requirements-test.txt")
     },
-    extras_require={"test": read_requirements("requirements-test.txt")},
 )
