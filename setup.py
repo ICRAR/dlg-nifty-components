@@ -32,11 +32,12 @@ def read_requirements(path):
 setup(
     name="dlg_nifty_components",
     version=read("dlg_nifty_components", "VERSION"),
-    description="dlg_nifty_components created by ICRAR",
-    url="https://github.com/ICRAR/dlg-nifty-components/",
+    description="nifty gridding components for daliuge-engine created by ICRAR",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
-    author="ICRAR",
+    author="ICRAR DIA Group",
+    author_email="dfms_prototype@googlegroups.com",
+    url="https://github.com/ICRAR/dlg-nifty-components",
     license="BSD License",
     packages=find_packages(exclude=["tests", ".github"]),
     install_requires=read_requirements("requirements.txt"),
@@ -44,4 +45,5 @@ setup(
         "cuda": read_requirements("requirements-cuda.txt"),
         "test": read_requirements("requirements-test.txt")
     },
+    test_suite="test"
 )
