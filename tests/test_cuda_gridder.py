@@ -15,7 +15,7 @@ except ImportError:
     cuda_enabled = False
 
 
-@unittest.skipIf(cuda_enabled is False, 'wagg not installed')
+@unittest.skipIf(cuda_enabled is False, 'ska-gridder-nifty-cuda not installed')
 def test_CudaMS2DirtyApp_exceptions():
     """Tests that component raises exception on invalid configurations"""
     app = CudaMS2DirtyApp("a", "a")
@@ -24,7 +24,7 @@ def test_CudaMS2DirtyApp_exceptions():
         app.run()
 
 
-@unittest.skipIf(cuda_enabled is False, 'wagg not installed')
+@unittest.skipIf(cuda_enabled is False, 'ska-gridder-nifty-cuda not installed')
 def test_CudaMS2DirtyApp():
     """Tests that app executes with a valid configuration"""
 
@@ -75,7 +75,7 @@ def test_CudaMS2DirtyApp():
     app.run()
 
 
-@unittest.skipIf(cuda_enabled is False, 'wagg not installed')
+@unittest.skipIf(cuda_enabled is False, 'ska-gridder-nifty-cuda not installed')
 def test_CudaDirty2MSApp_exceptions():
     """Tests that component raises exception on invalid configurations"""
     app = CudaDirty2MSApp("a", "a")
@@ -83,7 +83,7 @@ def test_CudaDirty2MSApp_exceptions():
         app.run()
 
 
-@unittest.skipIf(cuda_enabled is False, 'wagg not installed')
+@unittest.skipIf(cuda_enabled is False, 'ska-gridder-nifty-cuda not installed')
 def test_CudaDirty2MSApp():
     """Tests that app executes with a valid configuration"""
 

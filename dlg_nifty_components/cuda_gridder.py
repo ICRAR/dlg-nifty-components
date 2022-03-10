@@ -1,4 +1,4 @@
-import wagg
+import cuda_nifty_gridder
 from dlg.exceptions import DaliugeException
 from dlg.drop import BarrierAppDROP
 from dlg.meta import (
@@ -18,7 +18,6 @@ from dlg.droputils import save_numpy, load_numpy
 # @details Converts measurement set data to a dirty image
 # @par EAGLE_START
 # @param category PythonApp
-# @param requirements wagg/
 # @param[in] param/appclass appclass/dlg_nifty_components.CudaMS2DirtyApp/String/readonly/False/
 #     \~English Application class
 # @param[in] param/npix_x npix_x/64/Integer/readwrite/False/
@@ -43,6 +42,7 @@ from dlg.droputils import save_numpy, load_numpy
 #     \~English dirty image port
 # @par EAGLE_END
 class CudaMS2DirtyApp(BarrierAppDROP):
+    """doc"""
     component_meta = dlg_component(
         "CudaMS2DirtyApp",
         "Nifty Ms2Dirty App.",
@@ -50,11 +50,11 @@ class CudaMS2DirtyApp(BarrierAppDROP):
         [dlg_batch_output("binary/*", [])],
         [dlg_streaming_input("binary/*")],
     )
-    npix_x = dlg_int_param("npix_x", 64)
-    npix_y = dlg_int_param("npix_y", 64)
-    do_wstacking = dlg_bool_param("do_wstacking", True)
-    pixsize_x = dlg_float_param("pixsize_x", None)
-    pixsize_y = dlg_float_param("pixsize_y", None)
+    npix_x: int = dlg_int_param("npix_x", 64)
+    npix_y: int = dlg_int_param("npix_y", 64)
+    do_wstacking: bool = dlg_bool_param("do_wstacking", True)
+    pixsize_x: float = dlg_float_param("pixsize_x", None)
+    pixsize_y: float = dlg_float_param("pixsize_y", None)
 
     def run(self):
         if len(self.inputs) < 4:
@@ -72,17 +72,19 @@ class CudaMS2DirtyApp(BarrierAppDROP):
         if self.pixsize_y is None:
             self.pixsize_y = 1.0 / self.npix_y
 
-        image = wagg.ms2dirty(
-            uvw,
-            freq,
-            vis,
-            weight_spectrum,
-            self.npix_x,
-            self.npix_y,
-            self.pixsize_x,
-            self.pixsize_y,
-            epsilon,
-            self.do_wstacking,
+        image = cuda_nifty_gridder.ms2dirty(
+            uvw=uvw,
+            freq=freq,
+            ms=vis,
+            weight=weight_spectrum,
+            npix_x=self.npix_x,
+            npix_y=self.npix_y,
+            pixsize_x_rad=self.pixsize_x,
+            pixsize_y_rad=self.pixsize_y,
+            dummy1=0,
+            dummy2=0,
+            epsilon=epsilon,
+            do_wstacking=self.do_wstacking
         )
 
         save_numpy(self.outputs[0], image)
@@ -113,6 +115,7 @@ class CudaMS2DirtyApp(BarrierAppDROP):
 #     \~English vis port
 # @par EAGLE_END
 class CudaDirty2MSApp(BarrierAppDROP):
+    """doc"""
     component_meta = dlg_component(
         "CudaDirty2MSApp",
         "Nifty Ms2Dirty App.",
@@ -120,9 +123,9 @@ class CudaDirty2MSApp(BarrierAppDROP):
         [dlg_batch_output("binary/*", [])],
         [dlg_streaming_input("binary/*")],
     )
-    pixsize_x = dlg_float_param("pixsize_x", None)
-    pixsize_y = dlg_float_param("pixsize_y", None)
-    do_wstacking = dlg_bool_param("do_wstacking", None)
+    pixsize_x: float = dlg_float_param("pixsize_x", None)
+    pixsize_y: float = dlg_float_param("pixsize_y", None)
+    do_wstacking: bool = dlg_bool_param("do_wstacking", None)
 
     def run(self):
         if len(self.inputs) < 4:
@@ -140,15 +143,17 @@ class CudaDirty2MSApp(BarrierAppDROP):
         if self.pixsize_y is None:
             self.pixsize_y = 1.0 / dirty.shape[1]
 
-        vis = wagg.dirty2ms(
-            uvw,
-            freq,
-            dirty,
-            weight_spectrum,
-            self.pixsize_x,
-            self.pixsize_y,
-            epsilon,
-            self.do_wstacking,
+        vis = cuda_nifty_gridder.dirty2ms(
+            uvw=uvw,
+            freq=freq,
+            dirty=dirty,
+            weight=weight_spectrum,
+            pixsize_x_rad=self.pixsize_x,
+            pixsize_y_rad=self.pixsize_y,
+            dummy1=0,
+            dummy2=0,
+            epsilon=epsilon,
+            do_wstacking=self.do_wstacking,
         )
 
         save_numpy(self.outputs[0], vis)
@@ -160,7 +165,6 @@ class CudaDirty2MSApp(BarrierAppDROP):
 # a gridded image from visibilities and a set of degridded visibilities of the image.
 # @par EAGLE_START
 # @param category PythonApp
-# @param requirements wagg/
 # @param[in] param/appclass appclass/dlg_nifty_components.CudaNiftyApp/String/readonly/False/
 #     \~English Application class
 # @param[in] param/npix_x npix_x/64/Integer/readwrite/False/
@@ -189,6 +193,7 @@ class CudaDirty2MSApp(BarrierAppDROP):
 #     \~English Port carrying output degridded visibilities of shape (baselines, channels, pols)
 # @par EAGLE_END
 class CudaNiftyApp(BarrierAppDROP):
+    """doc"""
     component_meta = dlg_component(
         "CudaNiftyApp",
         "Cuda Nifty App.",
@@ -196,12 +201,12 @@ class CudaNiftyApp(BarrierAppDROP):
         [dlg_batch_output("binary/*", [])],
         [dlg_streaming_input("binary/*")],
     )
-    npix_x = dlg_int_param("npix_x", 64)
-    npix_y = dlg_int_param("npix_y", 64)
-    do_wstacking = dlg_bool_param("do_wstacking", None)
-    pixsize_x = dlg_float_param("pixsize_x", None)
-    pixsize_y = dlg_float_param("pixsize_y", None)
-    polarization = dlg_int_param("polarization", 0)
+    npix_x: int = dlg_int_param("npix_x", 64)
+    npix_y: int = dlg_int_param("npix_y", 64)
+    do_wstacking: bool = dlg_bool_param("do_wstacking", None)
+    pixsize_x: float = dlg_float_param("pixsize_x", None)
+    pixsize_y: float = dlg_float_param("pixsize_y", None)
+    polarization: int = dlg_int_param("polarization", 0)
 
     def run(self):
         if len(self.inputs) < 4:
@@ -220,29 +225,33 @@ class CudaNiftyApp(BarrierAppDROP):
         vis = load_numpy(self.inputs[2])
         weight_spectrum = load_numpy(self.inputs[3])
 
-        image_dirty = wagg.ms2dirty(
-            uvw,
-            freq,
-            vis,
-            weight_spectrum,
-            self.npix_x,
-            self.npix_y,
-            self.pixsize_x,
-            self.pixsize_y,
-            epsilon,
-            self.do_wstacking,
+        image_dirty = cuda_nifty_gridder.ms2dirty(
+            uvw=uvw,
+            freq=freq,
+            ms=vis,
+            weight=weight_spectrum,
+            npix_x=self.npix_x,
+            npix_y=self.npix_y,
+            pixsize_x_rad=self.pixsize_x,
+            pixsize_y_rad=self.pixsize_y,
+            dummy1=0,
+            dummy2=0,
+            epsilon=epsilon,
+            do_wstacking=self.do_wstacking,
         )
         save_numpy(self.outputs[0], image_dirty)
 
-        vis_degridded = wagg.dirty2ms(
-            uvw,
-            freq,
-            image_dirty,
-            weight_spectrum,
-            self.pixsize_x,
-            self.pixsize_y,
-            epsilon,
-            self.do_wstacking,
+        vis_degridded = cuda_nifty_gridder.dirty2ms(
+            uvw=uvw,
+            freq=freq,
+            dirty=image_dirty,
+            weight=weight_spectrum,
+            pixsize_x_rad=self.pixsize_x,
+            pixsize_y_rad=self.pixsize_y,
+            dummy1=0,
+            dummy2=0,
+            epsilon=epsilon,
+            do_wstacking=self.do_wstacking,
         )
         vis[:: self.polarization] = vis_degridded
         save_numpy(self.outputs[1], vis)
