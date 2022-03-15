@@ -9,7 +9,7 @@ from dlg.droputils import save_numpy
 given = pytest.mark.parametrize
 
 try:
-    from dlg_nifty_components.cuda_gridder import CudaMS2DirtyApp, CudaDirty2MSApp
+    from dlg_nifty_components import CudaMS2DirtyApp, CudaDirty2MSApp
     cuda_enabled = True
 except ImportError:
     cuda_enabled = False
