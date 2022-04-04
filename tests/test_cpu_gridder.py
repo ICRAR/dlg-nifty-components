@@ -10,11 +10,12 @@ from dlg.drop import InMemoryDROP
 
 given = pytest.mark.parametrize
 
+
 class CpuTests(unittest.TestCase):
     def test_MS2DirtyApp_exceptions(self):
         app = MS2DirtyApp("a", "a")
 
-        with pytest.raises(DaliugeException) as e:
+        with pytest.raises(DaliugeException):
             app.run()
 
     def test_MS2DirtyApp(self):
@@ -73,7 +74,7 @@ class CpuTests(unittest.TestCase):
             weight_spectrum_drop.setCompleted()
 
         dirty = load_numpy(output)
-        assert dirty.shape == (64,64)
+        assert dirty.shape == (64, 64)
 
     def test_Dirty2MSApp_exceptions(self):
         """
@@ -139,4 +140,4 @@ class CpuTests(unittest.TestCase):
             weight_spectrum_drop.setCompleted()
 
         vis = load_numpy(vis_drop)
-        assert vis.shape == (16,1)
+        assert vis.shape == (16, 1)

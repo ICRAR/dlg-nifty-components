@@ -44,6 +44,7 @@ from dlg.droputils import save_numpy, load_numpy
 # @par EAGLE_END
 class CudaMS2DirtyApp(BarrierAppDROP):
     """doc"""
+
     component_meta = dlg_component(
         "CudaMS2DirtyApp",
         "Nifty Ms2Dirty App.",
@@ -85,7 +86,7 @@ class CudaMS2DirtyApp(BarrierAppDROP):
             dummy1=0,
             dummy2=0,
             epsilon=epsilon,
-            do_wstacking=self.do_wstacking
+            do_wstacking=self.do_wstacking,
         )
 
         save_numpy(self.outputs[0], image)
@@ -117,6 +118,7 @@ class CudaMS2DirtyApp(BarrierAppDROP):
 # @par EAGLE_END
 class CudaDirty2MSApp(BarrierAppDROP):
     """doc"""
+
     component_meta = dlg_component(
         "CudaDirty2MSApp",
         "Nifty Ms2Dirty App.",
@@ -154,7 +156,7 @@ class CudaDirty2MSApp(BarrierAppDROP):
             dummy1=0,
             dummy2=0,
             epsilon=epsilon,
-            do_wstacking=self.do_wstacking
+            do_wstacking=self.do_wstacking,
         )
 
         save_numpy(self.outputs[0], vis)
@@ -195,6 +197,7 @@ class CudaDirty2MSApp(BarrierAppDROP):
 # @par EAGLE_END
 class CudaNiftyApp(BarrierAppDROP):
     """doc"""
+
     component_meta = dlg_component(
         "CudaNiftyApp",
         "Cuda Nifty App.",

@@ -11,12 +11,13 @@ given = pytest.mark.parametrize
 
 try:
     from dlg_nifty_components import CudaMS2DirtyApp, CudaDirty2MSApp
+
     cuda_enabled = True
 except ImportError:
     cuda_enabled = False
 
 
-@unittest.skipIf(cuda_enabled is False, 'ska-gridder-nifty-cuda not installed')
+@unittest.skipIf(cuda_enabled is False, "ska-gridder-nifty-cuda not installed")
 class CudaTests(unittest.TestCase):
     def test_CudaMS2DirtyApp_exceptions(self):
         """Tests that component raises exception on invalid configurations"""
@@ -78,18 +79,18 @@ class CudaTests(unittest.TestCase):
             freq_drop.setCompleted()
             vis_drop.setCompleted()
             weight_spectrum_drop.setCompleted()
-        
-        dirty = load_numpy(image_drop)
-        assert dirty.shape == (64,64)
 
-    @unittest.skipIf(cuda_enabled is False, 'ska-gridder-nifty-cuda not installed')
+        dirty = load_numpy(image_drop)
+        assert dirty.shape == (64, 64)
+
+    @unittest.skipIf(cuda_enabled is False, "ska-gridder-nifty-cuda not installed")
     def test_CudaDirty2MSApp_exceptions(self):
         """Tests that component raises exception on invalid configurations"""
         app = CudaDirty2MSApp("a", "a")
-        with pytest.raises(DaliugeException) as e:
+        with pytest.raises(DaliugeException):
             app.run()
 
-    @unittest.skipIf(cuda_enabled is False, 'ska-gridder-nifty-cuda not installed')
+    @unittest.skipIf(cuda_enabled is False, "ska-gridder-nifty-cuda not installed")
     def test_CudaDirty2MSApp(self):
         """Tests that app executes with a valid configuration"""
 
@@ -145,4 +146,4 @@ class CudaTests(unittest.TestCase):
             weight_spectrum_drop.setCompleted()
 
         vis = load_numpy(vis_drop)
-        assert vis.shape == (16,1)
+        assert vis.shape == (16, 1)
