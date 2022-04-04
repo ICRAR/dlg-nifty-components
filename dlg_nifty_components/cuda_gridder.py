@@ -1,3 +1,4 @@
+from typing import Optional
 import cuda_nifty_gridder
 from dlg.exceptions import DaliugeException
 from dlg.drop import BarrierAppDROP
@@ -50,11 +51,11 @@ class CudaMS2DirtyApp(BarrierAppDROP):
         [dlg_batch_output("binary/*", [])],
         [dlg_streaming_input("binary/*")],
     )
-    npix_x: int = dlg_int_param("npix_x", 64)
-    npix_y: int = dlg_int_param("npix_y", 64)
-    do_wstacking: bool = dlg_bool_param("do_wstacking", True)
-    pixsize_x: float = dlg_float_param("pixsize_x", None)
-    pixsize_y: float = dlg_float_param("pixsize_y", None)
+    npix_x: int = dlg_int_param("npix_x", 64)  # type: ignore
+    npix_y: int = dlg_int_param("npix_y", 64)  # type: ignore
+    pixsize_x: Optional[float] = dlg_float_param("pixsize_x", None)  # type: ignore
+    pixsize_y: Optional[float] = dlg_float_param("pixsize_y", None)  # type: ignore
+    do_wstacking: bool = dlg_bool_param("do_wstacking", True)  # type: ignore
 
     def run(self):
         if len(self.inputs) < 4:
@@ -123,9 +124,9 @@ class CudaDirty2MSApp(BarrierAppDROP):
         [dlg_batch_output("binary/*", [])],
         [dlg_streaming_input("binary/*")],
     )
-    pixsize_x: float = dlg_float_param("pixsize_x", None)
-    pixsize_y: float = dlg_float_param("pixsize_y", None)
-    do_wstacking: bool = dlg_bool_param("do_wstacking", None)
+    pixsize_x: Optional[float] = dlg_float_param("pixsize_x", None)  # type: ignore
+    pixsize_y: Optional[float] = dlg_float_param("pixsize_y", None)  # type: ignore
+    do_wstacking: bool = dlg_bool_param("do_wstacking", True)  # type: ignore
 
     def run(self):
         if len(self.inputs) < 4:
@@ -153,7 +154,7 @@ class CudaDirty2MSApp(BarrierAppDROP):
             dummy1=0,
             dummy2=0,
             epsilon=epsilon,
-            do_wstacking=self.do_wstacking,
+            do_wstacking=self.do_wstacking
         )
 
         save_numpy(self.outputs[0], vis)
@@ -201,12 +202,12 @@ class CudaNiftyApp(BarrierAppDROP):
         [dlg_batch_output("binary/*", [])],
         [dlg_streaming_input("binary/*")],
     )
-    npix_x: int = dlg_int_param("npix_x", 64)
-    npix_y: int = dlg_int_param("npix_y", 64)
-    do_wstacking: bool = dlg_bool_param("do_wstacking", None)
-    pixsize_x: float = dlg_float_param("pixsize_x", None)
-    pixsize_y: float = dlg_float_param("pixsize_y", None)
-    polarization: int = dlg_int_param("polarization", 0)
+    npix_x: int = dlg_int_param("npix_x", 64)  # type: ignore
+    npix_y: int = dlg_int_param("npix_y", 64)  # type: ignore
+    pixsize_x: Optional[float] = dlg_float_param("pixsize_x", None)  # type: ignore
+    pixsize_y: Optional[float] = dlg_float_param("pixsize_y", None)  # type: ignore
+    do_wstacking: bool = dlg_bool_param("do_wstacking", True)  # type: ignore
+    polarization: int = dlg_int_param("polarization", 0)  # type: ignore
 
     def run(self):
         if len(self.inputs) < 4:

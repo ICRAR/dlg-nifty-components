@@ -15,7 +15,7 @@ from dlg.droputils import save_numpy, load_numpy
 
 ##
 # @brief MS2DirtyApp
-# @details Converts measurement set data to a dirty image. 
+# @details Converts measurement set data to a dirty image.
 # @par EAGLE_START
 # @param category PythonApp
 # @param requirements wagg/
@@ -50,11 +50,11 @@ class MS2DirtyApp(BarrierAppDROP):
         [dlg_batch_output("binary/*", [])],
         [dlg_streaming_input("binary/*")],
     )
-    npix_x = dlg_int_param("npix_x", 64)
-    npix_y = dlg_int_param("npix_y", 64)
-    do_wstacking = dlg_bool_param("do_wstacking", True)
-    pixsize_x = dlg_float_param("pixsize_x", None)
-    pixsize_y = dlg_float_param("pixsize_y", None)
+    npix_x: int = dlg_int_param("npix_x", 64)  # type: ignore
+    npix_y: int = dlg_int_param("npix_y", 64)  # type: ignore
+    do_wstacking: bool = dlg_bool_param("do_wstacking", True)  # type: ignore
+    pixsize_x: float = dlg_float_param("pixsize_x", None)  # type: ignore
+    pixsize_y: float = dlg_float_param("pixsize_y", None)  # type: ignore
 
     def run(self):
         if len(self.inputs) < 4:
@@ -120,9 +120,9 @@ class Dirty2MSApp(BarrierAppDROP):
         [dlg_batch_output("binary/*", [])],
         [dlg_streaming_input("binary/*")],
     )
-    pixsize_x = dlg_float_param("pixsize_x", None)
-    pixsize_y = dlg_float_param("pixsize_y", None)
-    do_wstacking = dlg_bool_param("do_wstacking", None)
+    pixsize_x: float = dlg_float_param("pixsize_x", None)  # type: ignore
+    pixsize_y: float = dlg_float_param("pixsize_y", None)  # type: ignore
+    do_wstacking: bool = dlg_bool_param("do_wstacking", None)  # type: ignore
 
     def run(self):
         if len(self.inputs) < 4:
@@ -141,14 +141,16 @@ class Dirty2MSApp(BarrierAppDROP):
             self.pixsize_y = 1.0 / dirty.shape[1]
 
         vis = ducc0.wgridder.dirty2ms(
-            uvw,
-            freq,
-            dirty,
-            weight_spectrum,
-            self.pixsize_x,
-            self.pixsize_y,
-            epsilon,
-            self.do_wstacking,
+            uvw=uvw,
+            freq=freq,
+            dirty=dirty,
+            wgt=weight_spectrum,
+            pixsize_x=self.pixsize_x,
+            pixsize_y=self.pixsize_y,
+            nu=0,
+            nv=0,
+            epsilon=epsilon,
+            do_wstacking=self.do_wstacking,
         )
 
         save_numpy(self.outputs[0], vis)
