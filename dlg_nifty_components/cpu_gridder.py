@@ -30,15 +30,15 @@ from dlg.droputils import save_numpy, load_numpy
 #     \~English the allowed failure rate of the inputs (in percent), before this component goes to ERROR state and is not executed
 # @param[in] cparam/n_tries Number of tries/1/Integer/readwrite/False//False/
 #     \~English Specifies the number of times the 'run' method will be executed before finally giving up
-# @param[in] aparam/npix_x npix_x/64/Integer/readwrite/False//False/
+# @param[in] cparam/npix_x npix_x/64/Integer/readwrite/False//False/
 #     \~English x dimensions of the dirty image
-# @param[in] aparam/npix_y npix_y/64/Integer/readwrite/False//False/
+# @param[in] cparam/npix_y npix_y/64/Integer/readwrite/False//False/
 #     \~English y dimensions of the dirty image
-# @param[in] aparam/do_wstacking do_wstacking/True/Boolean/readwrite/False//False/
+# @param[in] cparam/do_wstacking do_wstacking/True/Boolean/readwrite/False//False/
 #     \~English whether to perform wstacking
-# @param[in] aparam/pixsize_x pixsize_x//Float/readwrite/False//False/
+# @param[in] cparam/pixsize_x pixsize_x//Float/readwrite/False//False/
 #     \~English pixel horizontal angular size in radians
-# @param[in] aparam/pixsize_y pixsize_y//Float/readwrite/False//False/
+# @param[in] cparam/pixsize_y pixsize_y//Float/readwrite/False//False/
 #     \~English pixel vertical angular size in radians
 # @param[in] port/uvw uvw/npy/
 #     \~English uvw port
@@ -114,11 +114,11 @@ class MS2DirtyApp(BarrierAppDROP):
 #     \~English the allowed failure rate of the inputs (in percent), before this component goes to ERROR state and is not executed
 # @param[in] cparam/n_tries Number of tries/1/Integer/readwrite/False//False/
 #     \~English Specifies the number of times the 'run' method will be executed before finally giving up
-# @param[in] aparam/do_wstacking do_wstacking/True/Boolean/readwrite/False//False/
+# @param[in] cparam/do_wstacking do_wstacking/True/Boolean/readwrite/False//False/
 #     \~English whether to perform wstacking
-# @param[in] aparam/pixsize_x pixsize_x//Float/readwrite/False//False/
+# @param[in] cparam/pixsize_x pixsize_x//Float/readwrite/False//False/
 #     \~English pixel horizontal angular size in radians
-# @param[in] aparam/pixsize_y pixsize_y//Float/readwrite/False//False/
+# @param[in] cparam/pixsize_y pixsize_y//Float/readwrite/False//False/
 #     \~English pixel vertical angular size in radians
 # @param[in] port/uvw uvw/npy/
 #     \~English uvw port
