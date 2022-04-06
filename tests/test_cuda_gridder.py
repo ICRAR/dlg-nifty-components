@@ -74,6 +74,9 @@ class CudaTests(unittest.TestCase):
         image_drop = InMemoryDROP("image", "image")
         app.addOutput(image_drop)
 
+        # NOTE: daliuge engine executes on a seperate thread and thus tests should
+        # should use DROPwaiterCtx
+        # app.run()
         with DROPWaiterCtx(self, image_drop, 5):
             uvw_drop.setCompleted()
             freq_drop.setCompleted()
@@ -139,6 +142,9 @@ class CudaTests(unittest.TestCase):
         vis_drop = InMemoryDROP("vis", "vis")
         app.addOutput(vis_drop)
 
+        # NOTE: daliuge engine executes on a seperate thread and thus tests should
+        # should use DROPwaiterCtx
+        # app.run()
         with DROPWaiterCtx(self, vis_drop, 5):
             uvw_drop.setCompleted()
             freq_drop.setCompleted()

@@ -15,21 +15,30 @@ from dlg.droputils import save_numpy, load_numpy
 
 ##
 # @brief MS2DirtyApp
-# @details Converts measurement set data to a dirty image.
+# @details Converts measurement set data to a dirty image
 # @par EAGLE_START
 # @param category PythonApp
-# @param requirements wagg/
-# @param[in] param/appclass appclass/dlg_nifty_components.MS2DirtyApp/String/readonly/False/
+# @param[in] cparam/appclass appclass/dlg_nifty_components.MS2DirtyApp/String/readonly/False//False/
 #     \~English Application class
-# @param[in] param/npix_x npix_x/64/Integer/readwrite/False/
+# @param[in] cparam/execution_time Execution Time/5/Float/readonly/False//False/
+#     \~English Estimated execution time
+# @param[in] cparam/num_cpus No. of CPUs/1/Integer/readonly/False//False/
+#     \~English Number of cores used
+# @param[in] cparam/group_start Group start/False/Boolean/readwrite/False//False/
+#     \~English Is this node the start of a group?
+# @param[in] cparam/input_error_threshold "Input error rate (%)"/0/Integer/readwrite/False//False/
+#     \~English the allowed failure rate of the inputs (in percent), before this component goes to ERROR state and is not executed
+# @param[in] cparam/n_tries Number of tries/1/Integer/readwrite/False//False/
+#     \~English Specifies the number of times the 'run' method will be executed before finally giving up
+# @param[in] aparam/npix_x npix_x/64/Integer/readwrite/False//False/
 #     \~English x dimensions of the dirty image
-# @param[in] param/npix_y npix_y/64/Integer/readwrite/False/
+# @param[in] aparam/npix_y npix_y/64/Integer/readwrite/False//False/
 #     \~English y dimensions of the dirty image
-# @param[in] param/do_wstacking do_wstacking/True/Bool/readwrite/False/
+# @param[in] aparam/do_wstacking do_wstacking/True/Boolean/readwrite/False//False/
 #     \~English whether to perform wstacking
-# @param[in] param/pixsize_x pixsize_x//Float/readwrite/False/
+# @param[in] aparam/pixsize_x pixsize_x//Float/readwrite/False//False/
 #     \~English pixel horizontal angular size in radians
-# @param[in] param/pixsize_y pixsize_y//Float/readwrite/False/
+# @param[in] aparam/pixsize_y pixsize_y//Float/readwrite/False//False/
 #     \~English pixel vertical angular size in radians
 # @param[in] port/uvw uvw/npy/
 #     \~English uvw port
@@ -93,13 +102,23 @@ class MS2DirtyApp(BarrierAppDROP):
 # @details Converts a dirty image to measurement set visibilities
 # @par EAGLE_START
 # @param category PythonApp
-# @param[in] param/appclass appclass/dlg_nifty_components.Dirty2MSApp/String/readonly/False/
+# @param[in] cparam/appclass appclass/dlg_nifty_components.Dirty2MSApp/String/readonly/False//False/
 #     \~English Application class
-# @param[in] param/do_wstacking do_wstacking/True/Bool/readwrite/False/
+# @param[in] cparam/execution_time Execution Time/5/Float/readonly/False//False/
+#     \~English Estimated execution time
+# @param[in] cparam/num_cpus No. of CPUs/1/Integer/readonly/False//False/
+#     \~English Number of cores used
+# @param[in] cparam/group_start Group start/False/Boolean/readwrite/False//False/
+#     \~English Is this node the start of a group?
+# @param[in] cparam/input_error_threshold "Input error rate (%)"/0/Integer/readwrite/False//False/
+#     \~English the allowed failure rate of the inputs (in percent), before this component goes to ERROR state and is not executed
+# @param[in] cparam/n_tries Number of tries/1/Integer/readwrite/False//False/
+#     \~English Specifies the number of times the 'run' method will be executed before finally giving up
+# @param[in] aparam/do_wstacking do_wstacking/True/Boolean/readwrite/False//False/
 #     \~English whether to perform wstacking
-# @param[in] param/pixsize_x pixsize_x//Float/readwrite/False/
+# @param[in] aparam/pixsize_x pixsize_x//Float/readwrite/False//False/
 #     \~English pixel horizontal angular size in radians
-# @param[in] param/pixsize_y pixsize_y//Float/readwrite/False/
+# @param[in] aparam/pixsize_y pixsize_y//Float/readwrite/False//False/
 #     \~English pixel vertical angular size in radians
 # @param[in] port/uvw uvw/npy/
 #     \~English uvw port
@@ -120,14 +139,14 @@ class Dirty2MSApp(BarrierAppDROP):
         [dlg_batch_output("binary/*", [])],
         [dlg_streaming_input("binary/*")],
     )
+    do_wstacking: bool = dlg_bool_param("do_wstacking", None)  # type: ignore
     pixsize_x: float = dlg_float_param("pixsize_x", None)  # type: ignore
     pixsize_y: float = dlg_float_param("pixsize_y", None)  # type: ignore
-    do_wstacking: bool = dlg_bool_param("do_wstacking", None)  # type: ignore
 
     def run(self):
         if len(self.inputs) < 4:
             raise DaliugeException(
-                f"Dirty2MsApp has {len(self.inputs)} input drops but requires at least 4"
+                f"Dirty2MSApp has {len(self.inputs)} input drops but requires at least 4"
             )
         uvw = load_numpy(self.inputs[0])
         freq = load_numpy(self.inputs[1])
@@ -147,8 +166,6 @@ class Dirty2MSApp(BarrierAppDROP):
             wgt=weight_spectrum,
             pixsize_x=self.pixsize_x,
             pixsize_y=self.pixsize_y,
-            nu=0,
-            nv=0,
             epsilon=epsilon,
             do_wstacking=self.do_wstacking,
         )

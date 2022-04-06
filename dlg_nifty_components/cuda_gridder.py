@@ -19,17 +19,27 @@ from dlg.droputils import save_numpy, load_numpy
 # @details Converts measurement set data to a dirty image
 # @par EAGLE_START
 # @param category PythonApp
-# @param[in] param/appclass appclass/dlg_nifty_components.CudaMS2DirtyApp/String/readonly/False/
+# @param[in] cparam/appclass appclass/dlg_nifty_components.CudaMS2DirtyApp/String/readonly/False//False/
 #     \~English Application class
-# @param[in] param/npix_x npix_x/64/Integer/readwrite/False/
+# @param[in] cparam/execution_time Execution Time/5/Float/readonly/False//False/
+#     \~English Estimated execution time
+# @param[in] cparam/num_cpus No. of CPUs/1/Integer/readonly/False//False/
+#     \~English Number of cores used
+# @param[in] cparam/group_start Group start/False/Boolean/readwrite/False//False/
+#     \~English Is this node the start of a group?
+# @param[in] cparam/input_error_threshold "Input error rate (%)"/0/Integer/readwrite/False//False/
+#     \~English the allowed failure rate of the inputs (in percent), before this component goes to ERROR state and is not executed
+# @param[in] cparam/n_tries Number of tries/1/Integer/readwrite/False//False/
+#     \~English Specifies the number of times the 'run' method will be executed before finally giving up
+# @param[in] aparam/npix_x npix_x/64/Integer/readwrite/False//False/
 #     \~English x dimensions of the dirty image
-# @param[in] param/npix_y npix_y/64/Integer/readwrite/False/
+# @param[in] aparam/npix_y npix_y/64/Integer/readwrite/False//False/
 #     \~English y dimensions of the dirty image
-# @param[in] param/do_wstacking do_wstacking/True/Bool/readwrite/False/
+# @param[in] aparam/do_wstacking do_wstacking/True/Boolean/readwrite/False//False/
 #     \~English whether to perform wstacking
-# @param[in] param/pixsize_x pixsize_x//Float/readwrite/False/
+# @param[in] aparam/pixsize_x pixsize_x//Float/readwrite/False//False/
 #     \~English pixel horizontal angular size in radians
-# @param[in] param/pixsize_y pixsize_y//Float/readwrite/False/
+# @param[in] aparam/pixsize_y pixsize_y//Float/readwrite/False//False/
 #     \~English pixel vertical angular size in radians
 # @param[in] port/uvw uvw/npy/
 #     \~English uvw port
@@ -43,8 +53,6 @@ from dlg.droputils import save_numpy, load_numpy
 #     \~English dirty image port
 # @par EAGLE_END
 class CudaMS2DirtyApp(BarrierAppDROP):
-    """doc"""
-
     component_meta = dlg_component(
         "CudaMS2DirtyApp",
         "Nifty Ms2Dirty App.",
@@ -52,11 +60,11 @@ class CudaMS2DirtyApp(BarrierAppDROP):
         [dlg_batch_output("binary/*", [])],
         [dlg_streaming_input("binary/*")],
     )
+    do_wstacking: bool = dlg_bool_param("do_wstacking", True)  # type: ignore
     npix_x: int = dlg_int_param("npix_x", 64)  # type: ignore
     npix_y: int = dlg_int_param("npix_y", 64)  # type: ignore
     pixsize_x: Optional[float] = dlg_float_param("pixsize_x", None)  # type: ignore
     pixsize_y: Optional[float] = dlg_float_param("pixsize_y", None)  # type: ignore
-    do_wstacking: bool = dlg_bool_param("do_wstacking", True)  # type: ignore
 
     def run(self):
         if len(self.inputs) < 4:
@@ -97,13 +105,23 @@ class CudaMS2DirtyApp(BarrierAppDROP):
 # @details Converts a dirty image to measurement set visibilities
 # @par EAGLE_START
 # @param category PythonApp
-# @param[in] param/appclass appclass/dlg_nifty_components.CudaDirty2MSApp/String/readonly/False/
+# @param[in] cparam/appclass appclass/dlg_nifty_components.CudaDirty2MSApp/String/readonly/False//False/
 #     \~English Application class
-# @param[in] param/do_wstacking do_wstacking/True/Bool/readwrite/False/
+# @param[in] cparam/execution_time Execution Time/5/Float/readonly/False//False/
+#     \~English Estimated execution time
+# @param[in] cparam/num_cpus No. of CPUs/1/Integer/readonly/False//False/
+#     \~English Number of cores used
+# @param[in] cparam/group_start Group start/False/Boolean/readwrite/False//False/
+#     \~English Is this node the start of a group?
+# @param[in] cparam/input_error_threshold "Input error rate (%)"/0/Integer/readwrite/False//False/
+#     \~English the allowed failure rate of the inputs (in percent), before this component goes to ERROR state and is not executed
+# @param[in] cparam/n_tries Number of tries/1/Integer/readwrite/False//False/
+#     \~English Specifies the number of times the 'run' method will be executed before finally giving up
+# @param[in] aparam/do_wstacking do_wstacking/True/Boolean/readwrite/False//False/
 #     \~English whether to perform wstacking
-# @param[in] param/pixsize_x pixsize_x//Float/readwrite/False/
+# @param[in] aparam/pixsize_x pixsize_x//Float/readwrite/False//False/
 #     \~English pixel horizontal angular size in radians
-# @param[in] param/pixsize_y pixsize_y//Float/readwrite/False/
+# @param[in] aparam/pixsize_y pixsize_y//Float/readwrite/False//False/
 #     \~English pixel vertical angular size in radians
 # @param[in] port/uvw uvw/npy/
 #     \~English uvw port
@@ -117,8 +135,6 @@ class CudaMS2DirtyApp(BarrierAppDROP):
 #     \~English vis port
 # @par EAGLE_END
 class CudaDirty2MSApp(BarrierAppDROP):
-    """doc"""
-
     component_meta = dlg_component(
         "CudaDirty2MSApp",
         "Nifty Ms2Dirty App.",
@@ -168,19 +184,29 @@ class CudaDirty2MSApp(BarrierAppDROP):
 # a gridded image from visibilities and a set of degridded visibilities of the image.
 # @par EAGLE_START
 # @param category PythonApp
-# @param[in] param/appclass appclass/dlg_nifty_components.CudaNiftyApp/String/readonly/False/
+# @param[in] cparam/appclass appclass/dlg_nifty_components.CudaNiftyApp/String/readonly/False//False/
 #     \~English Application class
-# @param[in] param/npix_x npix_x/64/Integer/readwrite/False/
+# @param[in] cparam/execution_time Execution Time/5/Float/readonly/False//False/
+#     \~English Estimated execution time
+# @param[in] cparam/num_cpus No. of CPUs/1/Integer/readonly/False//False/
+#     \~English Number of cores used
+# @param[in] cparam/group_start Group start/False/Boolean/readwrite/False//False/
+#     \~English Is this node the start of a group?
+# @param[in] cparam/input_error_threshold "Input error rate (%)"/0/Integer/readwrite/False//False/
+#     \~English the allowed failure rate of the inputs (in percent), before this component goes to ERROR state and is not executed
+# @param[in] cparam/n_tries Number of tries/1/Integer/readwrite/False//False/
+#     \~English Specifies the number of times the 'run' method will be executed before finally giving up
+# @param[in] aparam/npix_x npix_x/64/Integer/readwrite/False//False/
 #     \~English x dimensions of the dirty image
-# @param[in] param/npix_y npix_y/64/Integer/readwrite/False/
+# @param[in] aparam/npix_y npix_y/64/Integer/readwrite/False//False/
 #     \~English y dimensions of the dirty image
-# @param[in] param/do_wstacking do_wstacking/True/Bool/readwrite/False/
+# @param[in] aparam/do_wstacking do_wstacking/True/Boolean/readwrite/False//False/
 #     \~English whether to perform wstacking
-# @param[in] param/pixsize_x pixsize_x//Float/readwrite/False/
+# @param[in] aparam/pixsize_x pixsize_x//Float/readwrite/False//False/
 #     \~English pixel horizontal angular size in radians
-# @param[in] param/pixsize_y pixsize_y//Float/readwrite/False/
+# @param[in] aparam/pixsize_y pixsize_y//Float/readwrite/False//False/
 #     \~English pixel vertical angular size in radians
-# @param[in] param/polarization polarization/0/Integer/readwrite/False/
+# @param[in] aparam/polarization polarization/0/Integer/readwrite/False//False/
 #     \~English polarization to perform gridding to
 # @param[in] port/uvw uvw/npy/
 #     \~English Port containing UVWs of shape (baselines, 3)
@@ -196,8 +222,6 @@ class CudaDirty2MSApp(BarrierAppDROP):
 #     \~English Port carrying output degridded visibilities of shape (baselines, channels, pols)
 # @par EAGLE_END
 class CudaNiftyApp(BarrierAppDROP):
-    """doc"""
-
     component_meta = dlg_component(
         "CudaNiftyApp",
         "Cuda Nifty App.",

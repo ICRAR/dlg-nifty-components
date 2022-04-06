@@ -67,11 +67,12 @@ class CpuTests(unittest.TestCase):
         output = InMemoryDROP("image", "image")
         app.addOutput(output)
 
-        with DROPWaiterCtx(self, output, 5):
-            uvw_drop.setCompleted()
-            freq_drop.setCompleted()
-            vis_drop.setCompleted()
-            weight_spectrum_drop.setCompleted()
+        #with DROPWaiterCtx(self, output, 5):
+        #    uvw_drop.setCompleted()
+        #    freq_drop.setCompleted()
+        #    vis_drop.setCompleted()
+        #    weight_spectrum_drop.setCompleted()
+        app.run()
 
         dirty = load_numpy(output)
         assert dirty.shape == (64, 64)
