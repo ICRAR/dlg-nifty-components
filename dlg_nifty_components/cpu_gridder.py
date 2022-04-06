@@ -40,6 +40,9 @@ from dlg.droputils import save_numpy, load_numpy
 #     \~English pixel horizontal angular size in radians
 # @param[in] cparam/pixsize_y pixsize_y//Float/readwrite/False//False/
 #     \~English pixel vertical angular size in radians
+# @param[in] cparam/epsilon Epsilon//Float/readwrite/False//False/
+#     \~English Accuracy at which the computation should be done. Must be larger than 2e-13.
+#               If **vis** has type numpy.float32, it must be larger than 1e-5.
 # @param[in] port/uvw uvw/npy/
 #     \~English uvw port
 # @param[in] port/freq freq/npy/
@@ -64,6 +67,8 @@ class MS2DirtyApp(BarrierAppDROP):
     do_wstacking: bool = dlg_bool_param("do_wstacking", True)  # type: ignore
     pixsize_x: float = dlg_float_param("pixsize_x", None)  # type: ignore
     pixsize_y: float = dlg_float_param("pixsize_y", None)  # type: ignore
+    epsilon: float = dlg_float_param("epsilon",1e-6)  # type: ignore
+
 
     def run(self):
         if len(self.inputs) < 4:
@@ -74,7 +79,6 @@ class MS2DirtyApp(BarrierAppDROP):
         freq = load_numpy(self.inputs[1])
         vis = load_numpy(self.inputs[2])
         weight_spectrum = load_numpy(self.inputs[3])
-        epsilon = 1e-6  # unused
 
         if self.pixsize_x is None:
             self.pixsize_x = 1.0 / self.npix_x
@@ -90,7 +94,7 @@ class MS2DirtyApp(BarrierAppDROP):
             npix_y=self.npix_y,
             pixsize_x=self.pixsize_x,
             pixsize_y=self.pixsize_y,
-            epsilon=epsilon,
+            epsilon=self.epsilon,
             do_wstacking=self.do_wstacking,
         )
 
@@ -120,6 +124,9 @@ class MS2DirtyApp(BarrierAppDROP):
 #     \~English pixel horizontal angular size in radians
 # @param[in] cparam/pixsize_y pixsize_y//Float/readwrite/False//False/
 #     \~English pixel vertical angular size in radians
+# @param[in] cparam/epsilon Epsilon//Float/readwrite/False//False/
+#     \~English Accuracy at which the computation should be done. Must be larger than 2e-13.
+#               If **vis** has type numpy.float32, it must be larger than 1e-5.
 # @param[in] port/uvw uvw/npy/
 #     \~English uvw port
 # @param[in] port/freq freq/npy/
@@ -142,6 +149,7 @@ class Dirty2MSApp(BarrierAppDROP):
     do_wstacking: bool = dlg_bool_param("do_wstacking", None)  # type: ignore
     pixsize_x: float = dlg_float_param("pixsize_x", None)  # type: ignore
     pixsize_y: float = dlg_float_param("pixsize_y", None)  # type: ignore
+    epsilon: float = dlg_float_param("epsilon",1e-6)  # type: ignore
 
     def run(self):
         if len(self.inputs) < 4:
@@ -152,7 +160,6 @@ class Dirty2MSApp(BarrierAppDROP):
         freq = load_numpy(self.inputs[1])
         dirty = load_numpy(self.inputs[2])
         weight_spectrum = load_numpy(self.inputs[3])
-        epsilon = 1e-6  # unused
 
         if self.pixsize_x is None:
             self.pixsize_x = 1.0 / dirty.shape[0]
@@ -166,7 +173,7 @@ class Dirty2MSApp(BarrierAppDROP):
             wgt=weight_spectrum,
             pixsize_x=self.pixsize_x,
             pixsize_y=self.pixsize_y,
-            epsilon=epsilon,
+            epsilon=self.epsilon,
             do_wstacking=self.do_wstacking,
         )
 
