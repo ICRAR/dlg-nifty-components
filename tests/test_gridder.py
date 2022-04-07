@@ -16,7 +16,7 @@ except ImportError:
     cuda_enabled = False
 
 
-class CpuTests(unittest.TestCase):
+class TestGridder(unittest.TestCase):
 
     def _test_gridder(self, app):
         """

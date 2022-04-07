@@ -18,7 +18,7 @@ except ImportError:
     cuda_enabled = False
 
 
-class CudaTests(unittest.TestCase):
+class TestDegridder(unittest.TestCase):
 
     def _test_degridder(self, app):
         """Tests that app executes with a valid configuration"""
